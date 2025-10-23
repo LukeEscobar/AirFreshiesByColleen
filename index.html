@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirFreshiesByColleen - Custom Air Fresheners</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1>AirFreshiesByColleen</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="customize.html">Shop Now</a>
+                    <div class="cart-icon" onclick="toggleCart()">
+                        <span>🛒</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Welcome to AirFreshiesByColleen</h1>
+                <p>Create your perfect custom air freshener with our easy-to-use customization process</p>
+                <div class="hero-buttons">
+                    <a href="customize.html" class="btn primary">Start Customizing</a>
+                    <a href="#about" class="btn secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-placeholder.svg" alt="Custom Air Fresheners" />
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>Why Choose AirFreshiesByColleen?</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Custom Design</h3>
+                        <p>Choose from multiple molds, colors, and finishes to create your unique air freshener</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌸</div>
+                        <h3>Premium Scents</h3>
+                        <p>Select from our extensive collection of high-quality fragrances</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✨</div>
+                        <h3>Special Effects</h3>
+                        <p>Add glitter and beads for that extra sparkle and style</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🚚</div>
+                        <h3>Fast Shipping</h3>
+                        <p>Quick processing and reliable delivery to your door</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <strong>Total: $<span id="cartTotal">0.00</span></strong>
+            </div>
+            <button class="btn primary checkout-btn" onclick="proceedToCheckout()">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AirFreshiesByColleen. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!-- Placeholder for hero-air-freshener.jpg -->
+<!-- This file serves as a placeholder. Replace with actual hero image -->
+<svg width="500" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="400" fill="#f0f4ff"/>
+  <text x="250" y="200" text-anchor="middle" fill="#667eea" font-size="24" font-family="Arial">
+    Hero Image Placeholder
+  </text>
+  <text x="250" y="230" text-anchor="middle" fill="#666" font-size="16" font-family="Arial">
+    500x400 - Replace with actual air freshener image
+  </text>
+</svg>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Air Freshener - AirFreshiesByColleen</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html"><h1>AirFreshiesByColleen</h1></a>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#about">About</a>
+                    <a href="customize.html">Shop Now</a>
+                    <div class="cart-icon" onclick="toggleCart()">
+                        <span>🛒</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="customize-main">
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                <span class="step-number">1</span>
+                <span class="step-title">Mold</span>
+            </div>
+            <div class="progress-step" data-step="2">
+                <span class="step-number">2</span>
+                <span class="step-title">Color</span>
+            </div>
+            <div class="progress-step" data-step="3">
+                <span class="step-number">3</span>
+                <span class="step-title">Scent</span>
+            </div>
+            <div class="progress-step" data-step="4">
+                <span class="step-number">4</span>
+                <span class="step-title">Glitter</span>
+            </div>
+            <div class="progress-step" data-step="5">
+                <span class="step-number">5</span>
+                <span class="step-title">Beads</span>
+            </div>
+        </div>
+
+        <div class="customize-container">
+            <!-- Step 1: Mold Selection -->
+            <div class="step-content active" id="step1">
+                <h2>Choose Your Mold</h2>
+                <div class="options-grid" id="moldOptions">
+                    <!-- Mold options will be populated by JavaScript -->
+                </div>
+                <div class="step-navigation">
+                    <button class="btn secondary" disabled>Previous</button>
+                    <button class="btn primary" onclick="nextStep()" disabled id="nextBtn1">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Color Selection -->
+            <div class="step-content" id="step2">
+                <h2>Choose Your Color</h2>
+                <div class="color-selection">
+                    <div class="base-colors" id="baseColors">
+                        <!-- Base colors will be populated by JavaScript -->
+                    </div>
+                    <div class="color-variants" id="colorVariants" style="display: none;">
+                        <h3>Select Variant</h3>
+                        <div class="variant-options">
+                            <div class="variant-option" data-variant="light">
+                                <div class="variant-preview"></div>
+                                <span>Light</span>
+                            </div>
+                            <div class="variant-option" data-variant="dark">
+                                <div class="variant-preview"></div>
+                                <span>Dark</span>
+                            </div>
+                            <div class="variant-option" data-variant="plain">
+                                <div class="variant-preview"></div>
+                                <span>Plain</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn secondary" onclick="previousStep()">Previous</button>
+                    <button class="btn primary" onclick="nextStep()" disabled id="nextBtn2">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Scent Selection -->
+            <div class="step-content" id="step3">
+                <h2>Choose Your Scent</h2>
+                <div class="scent-categories">
+                    <div class="category-tabs">
+                        <button class="category-tab active" data-category="floral">Floral</button>
+                        <button class="category-tab" data-category="fruity">Fruity</button>
+                        <button class="category-tab" data-category="fresh">Fresh</button>
+                        <button class="category-tab" data-category="sweet">Sweet</button>
+                        <button class="category-tab" data-category="seasonal">Seasonal</button>
+                        <button class="category-tab" data-category="exotic">Exotic</button>
+                    </div>
+                    <div class="scent-options" id="scentOptions">
+                        <!-- Scent options will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn secondary" onclick="previousStep()">Previous</button>
+                    <button class="btn primary" onclick="nextStep()" disabled id="nextBtn3">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Glitter Selection -->
+            <div class="step-content" id="step4">
+                <h2>Add Glitter?</h2>
+                <div class="glitter-options">
+                    <div class="glitter-option" data-glitter="none">
+                        <div class="glitter-preview no-glitter"></div>
+                        <h3>No Glitter</h3>
+                        <p>Classic clean look</p>
+                    </div>
+                    <div class="glitter-option" data-glitter="yes">
+                        <div class="glitter-preview with-glitter"></div>
+                        <h3>Add Glitter</h3>
+                        <p>Sparkly finish</p>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn secondary" onclick="previousStep()">Previous</button>
+                    <button class="btn primary" onclick="nextStep()" disabled id="nextBtn4">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 5: Bead Selection -->
+            <div class="step-content" id="step5">
+                <h2>Add Bead on Rope?</h2>
+                <div class="bead-options">
+                    <div class="bead-option" data-beads="none">
+                        <div class="bead-preview no-rope-beads"></div>
+                        <h3>No Bead</h3>
+                        <p>Simple rope design</p>
+                    </div>
+                    <div class="bead-option" data-beads="yes">
+                        <div class="bead-preview with-rope-beads"></div>
+                        <h3>Add Bead on Rope</h3>
+                        <p>Decorative bead on rope</p>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn secondary" onclick="previousStep()">Previous</button>
+                    <button class="btn primary" onclick="addToCart()" disabled id="addToCartBtn">Add to Cart - $<span id="finalPrice">12.99</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Summary -->
+        <div class="product-summary">
+            <h3>Your Selection</h3>
+            <div class="summary-details">
+                <div class="summary-item">
+                    <span class="label">Mold:</span>
+                    <span class="value" id="selectedMold">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Color:</span>
+                    <span class="value" id="selectedColor">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Scent:</span>
+                    <span class="value" id="selectedScent">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Glitter:</span>
+                    <span class="value" id="selectedGlitter">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Bead:</span>
+                    <span class="value" id="selectedBeads">-</span>
+                </div>
+                <div class="summary-total">
+                    <span class="label">Total:</span>
+                    <span class="value">$<span id="summaryPrice">12.99</span></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <strong>Total: $<span id="cartTotal">0.00</span></strong>
+            </div>
+            <button class="btn primary checkout-btn" onclick="proceedToCheckout()">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <script src="js/cart.js"></script>
+    <script src="js/customize.js"></script>
+</body>
+</html>
