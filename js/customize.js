@@ -14,18 +14,30 @@ const productData = {
     ],
     
     colors: [
-        { id: 'red', name: 'Red', hex: '#ff4757' },
-        { id: 'blue', name: 'Blue', hex: '#3742fa' },
-        { id: 'green', name: 'Green', hex: '#2ed573' },
-        { id: 'yellow', name: 'Yellow', hex: '#ffa502' },
-        { id: 'purple', name: 'Purple', hex: '#8e44ad' },
-        { id: 'pink', name: 'Pink', hex: '#ff6b9d' },
-        { id: 'orange', name: 'Orange', hex: '#ff6348' },
-        { id: 'teal', name: 'Teal', hex: '#00d2d3' },
-        { id: 'navy', name: 'Navy', hex: '#2c2c54' },
-        { id: 'lime', name: 'Lime', hex: '#7bed9f' },
-        { id: 'coral', name: 'Coral', hex: '#ff7675' },
-        { id: 'indigo', name: 'Indigo', hex: '#6c5ce7' }
+        // Standard colors (Light, Default, Dark variants)
+        { id: 'red', name: 'Red', hex: '#dc3545', variants: ['light', 'default', 'dark'] },
+        { id: 'orange', name: 'Orange', hex: '#fd7e14', variants: ['light', 'default', 'dark'] },
+        { id: 'yellow', name: 'Yellow', hex: '#ffc107', variants: ['light', 'default', 'dark'] },
+        { id: 'blue', name: 'Blue', hex: '#0d6efd', variants: ['light', 'default', 'dark'] },
+        { id: 'green', name: 'Green', hex: '#198754', variants: ['light', 'default', 'dark'] },
+        { id: 'purple', name: 'Purple', hex: '#6f42c1', variants: ['light', 'default', 'dark'] },
+        { id: 'white', name: 'White', hex: '#ffffff', variants: ['default'] }, // Only default variant
+        { id: 'black', name: 'Black', hex: '#000000', variants: ['default'] }, // Only default variant
+        { id: 'brown', name: 'Brown', hex: '#795548', variants: ['light', 'default', 'dark'] },
+        { id: 'tan', name: 'Tan', hex: '#d2b48c', variants: ['light', 'default', 'dark'] },
+        { id: 'gray', name: 'Gray', hex: '#6c757d', variants: ['light', 'default', 'dark'] },
+        { id: 'teal', name: 'Teal', hex: '#20c997', variants: ['light', 'default', 'dark'] },
+        { id: 'silver', name: 'Silver', hex: '#c0c0c0', variants: ['light', 'default', 'dark'] },
+        { id: 'gold', name: 'Gold', hex: '#ffd700', variants: ['light', 'default', 'dark'] },
+        { id: 'maroon', name: 'Maroon', hex: '#800000', variants: ['light', 'default', 'dark'] },
+        { id: 'pink', name: 'Pink', hex: '#e91e63', variants: ['light', 'default', 'dark', 'fluorescent'] },
+        
+        // Fluorescent colors (additional variants)
+        { id: 'yellow-fluor', name: 'Yellow', hex: '#ffff00', variants: ['fluorescent'], fluorescent: true },
+        { id: 'orange-fluor', name: 'Orange', hex: '#ff4500', variants: ['fluorescent'], fluorescent: true },
+        { id: 'purple-fluor', name: 'Purple', hex: '#9932cc', variants: ['fluorescent'], fluorescent: true },
+        { id: 'blue-fluor', name: 'Blue', hex: '#0080ff', variants: ['fluorescent'], fluorescent: true },
+        { id: 'green-fluor', name: 'Green', hex: '#00ff00', variants: ['fluorescent'], fluorescent: true }
     ],
 
     scents: {
@@ -96,14 +108,23 @@ function initializeStep1() {
 // Step 2: Initialize color selection
 function initializeStep2() {
     const baseColors = document.getElementById('baseColors');
-    baseColors.innerHTML = productData.colors.map(color => `
-        <div class="color-option" 
-             data-color="${color.id}" 
-             data-name="${color.name}"
-             style="background-color: ${color.hex}"
-             onclick="selectColor('${color.id}')">
-        </div>
-    `).join('');
+    
+    // Group colors by base color (excluding duplicates for fluorescent)
+    const uniqueColors = productData.colors.filter((color, index, array) => {
+        // Keep standard colors and first occurrence of fluorescent colors
+        return !color.fluorescent || array.findIndex(c => c.name === color.name && !c.fluorescent) === -1;
+    });
+    
+    baseColors.innerHTML = uniqueColors.map(color => {
+        return `
+            <div class="color-option" 
+                 data-color="${color.id}" 
+                 data-name="${color.name}"
+                 style="background-color: ${color.hex}"
+                 onclick="selectColor('${color.id}')">
+            </div>
+        `;
+    }).join('');
 }
 
 // Step 3: Initialize scent selection
@@ -152,13 +173,41 @@ function selectColor(colorId) {
     });
     document.querySelector(`[data-color="${colorId}"]`).classList.add('selected');
     
+    // Find the selected color and any fluorescent variant
+    const selectedColor = productData.colors.find(c => c.id === colorId);
+    const fluorescentVariant = productData.colors.find(c => 
+        c.name === selectedColor.name && c.fluorescent
+    );
+    
+    // Check if this color only has default variant (white/black)
+    if (selectedColor.variants.length === 1 && selectedColor.variants[0] === 'default') {
+        // For white and black, automatically select default variant and move to next step
+        currentSelection.colorVariant = 'default';
+        document.getElementById('colorVariants').style.display = 'none';
+        document.getElementById('nextBtn2').disabled = false;
+        updateSummary();
+        return;
+    }
+    
+    // Combine variants from both standard and fluorescent versions
+    let allVariants = [...(selectedColor.variants || [])];
+    if (fluorescentVariant && !allVariants.includes('fluorescent')) {
+        allVariants.push('fluorescent');
+    }
+    
+    // Create a combined color object for variant display
+    const colorForVariants = {
+        ...selectedColor,
+        variants: allVariants,
+        fluorescentHex: fluorescentVariant?.hex
+    };
+    
     // Show color variants
     const colorVariants = document.getElementById('colorVariants');
     colorVariants.style.display = 'block';
     
     // Update variant previews
-    const selectedColor = productData.colors.find(c => c.id === colorId);
-    updateColorVariants(selectedColor);
+    updateColorVariants(colorForVariants);
     
     // Reset variant selection
     currentSelection.colorVariant = null;
@@ -170,27 +219,62 @@ function selectColor(colorId) {
     updateSummary();
 }
 
-// Update color variants
+// Updated color variants function
 function updateColorVariants(color) {
-    const variants = document.querySelectorAll('.variant-option');
+    const colorVariants = document.getElementById('colorVariants');
+    const variantOptions = colorVariants.querySelector('.variant-options');
+    
+    // Clear existing variants
+    variantOptions.innerHTML = '';
+    
+    // Get available variants for this color
+    const variants = color.variants || ['light', 'default', 'dark'];
+    
     variants.forEach(variant => {
-        const variantType = variant.dataset.variant;
-        const preview = variant.querySelector('.variant-preview');
+        const variantDiv = document.createElement('div');
+        variantDiv.className = 'variant-option';
+        variantDiv.dataset.variant = variant;
+        
+        const preview = document.createElement('div');
+        preview.className = 'variant-preview';
         
         let variantColor = color.hex;
-        if (variantType === 'light') {
-            // Lighten the color
-            variantColor = lightenColor(color.hex, 40);
-        } else if (variantType === 'dark') {
-            // Darken the color
-            variantColor = darkenColor(color.hex, 40);
+        let variantName = variant;
+        
+        switch(variant) {
+            case 'light':
+                variantColor = lightenColor(color.hex, 40);
+                variantName = 'Light';
+                break;
+            case 'default':
+                variantColor = color.hex;
+                variantName = 'Default';
+                break;
+            case 'dark':
+                variantColor = darkenColor(color.hex, 40);
+                variantName = 'Dark';
+                break;
+            case 'fluorescent':
+                variantColor = color.fluorescentHex || color.hex;
+                variantName = 'Fluorescent';
+                preview.style.boxShadow = `0 0 20px ${variantColor}`;
+                preview.style.animation = 'fluorescent-glow 2s ease-in-out infinite alternate';
+                break;
         }
         
         preview.style.backgroundColor = variantColor;
         
-        // Add click handler
-        variant.onclick = () => selectColorVariant(variantType);
+        const label = document.createElement('span');
+        label.textContent = variantName;
+        
+        variantDiv.appendChild(preview);
+        variantDiv.appendChild(label);
+        variantDiv.onclick = () => selectColorVariant(variant);
+        
+        variantOptions.appendChild(variantDiv);
     });
+    
+    colorVariants.style.display = 'block';
 }
 
 // Color variant selection
@@ -448,6 +532,18 @@ function lightenColor(hex, percent) {
 
 function darkenColor(hex, percent) {
     const num = parseInt(hex.replace("#", ""), 16);
+    
+    // Special handling for gray, maroon, brown, and green - reduce darkening percentage
+    if (hex.toLowerCase() === '#6c757d') {
+        percent = percent * 0.6; // Make dark gray less dark (reduce effect by 40%)
+    } else if (hex.toLowerCase() === '#800000') {
+        percent = percent * 0.5; // Make dark maroon less dark (reduce effect by 50%)
+    } else if (hex.toLowerCase() === '#795548') {
+        percent = percent * 0.5; // Make dark brown less dark (reduce effect by 50%)
+    } else if (hex.toLowerCase() === '#198754') {
+        percent = percent * 0.5; // Make dark green less dark (reduce effect by 50%)
+    }
+    
     const amt = Math.round(2.55 * percent);
     const R = (num >> 16) - amt;
     const G = (num >> 8 & 0x00FF) - amt;
