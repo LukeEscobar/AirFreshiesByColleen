@@ -61,8 +61,9 @@ body {
 
 /* Header */
 .navbar {
-    background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
     position: fixed;
     top: 0;
     width: 100%;
@@ -74,25 +75,35 @@ body {
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Keep space-between */
     align-items: center;
-    height: 70px;
+    height: 80px;
+}
+
+/* Move nav logo further to the left */
+.nav-logo {
+    margin-left: -300px; /* Move logo further left */
 }
 
 .nav-logo h1 {
-    color: #667eea;
-    font-size: 24px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 50px;
     font-weight: 700;
+    color: #8e44ad;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin: 0;
 }
 
 .nav-logo a {
     text-decoration: none;
 }
 
+/* Move nav links further to the right */
 .nav-links {
     display: flex;
     align-items: center;
     gap: 30px;
+    margin-right: -300px; /* Move nav links further right */
 }
 
 .nav-links a {
@@ -168,11 +179,13 @@ body.flower-background {
 }
 
 .hero-content h1 {
-    font-size: 3rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
     font-weight: 700;
-    color: #333;
+    color: #8e44ad;
     margin-bottom: 20px;
     line-height: 1.2;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
 }
 
 .hero-content p {
@@ -810,14 +823,98 @@ body.home-page {
     border: 1px solid #f5c6cb;
 }
 
-/* Footer */
-footer {
-    background: rgba(51, 51, 51, 0.9); /* Semi-transparent dark */
-    color: white;
+/* Cart Sidebar - FIXED */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Hidden off-screen by default */
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1001;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-sidebar.open {
+    right: 0; /* Slide in when open */
+}
+
+.cart-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.cart-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-cart:hover {
+    color: #333;
+}
+
+.cart-items {
+    padding: 20px;
+    flex: 1; /* Take up remaining space */
+    overflow-y: auto;
+}
+
+.cart-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    background: #f8f9fa;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+.cart-total {
+    margin-bottom: 15px;
     text-align: center;
-    padding: 30px 20px;
-    margin-top: 0; /* Remove margin to ensure background shows */
-    backdrop-filter: blur(10px);
+    font-size: 18px;
+}
+
+.checkout-btn {
+    width: 100%;
+    margin: 0;
+}
+
+/* Ensure cart doesn't interfere with page layout */
+body {
+    overflow-x: hidden; /* Prevent horizontal scroll from hidden cart */
+}
+
+/* Mobile cart adjustments */
+@media (max-width: 768px) {
+    .cart-sidebar {
+        width: 100vw; /* Full width on mobile */
+        right: -100vw; /* Hide completely off-screen */
+    }
+    
+    .cart-sidebar.open {
+        right: 0;
+    }
 }
 
 /* Responsive Design */
@@ -926,5 +1023,39 @@ footer {
     .color-option::after {
         bottom: -40px; /* Even more space on small screens */
         font-size: 10px;
+    }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .nav-logo {
+        margin-left: -10px; /* Less spacing on mobile */
+    }
+    
+    .nav-links {
+        margin-right: -10px; /* Less spacing on mobile */
+        gap: 15px;
+    }
+
+    .nav-logo h1 {
+        font-size: 24px; /* Smaller font size on mobile */
+    }
+
+    .nav-container {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-logo h1 {
+        font-size: 20px; /* Even smaller on very small screens */
+    }
+    
+    .nav-logo {
+        margin-left: -5px;
+    }
+    
+    .nav-links {
+        margin-right: -5px;
     }
 }
