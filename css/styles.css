@@ -929,146 +929,521 @@ footer {
     margin: 0;
 }
 
-/* Responsive Design */
+/* Cardstock Section (separate from tabbed categories) */
+.cardstock-section {
+    margin-bottom: 50px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid #eee;
+}
+
+.cardstock-section h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.category-description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+/* Cardstock Inquiry */
+.cardstock-inquiry {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.cardstock-option {
+    border: 2px solid #eee;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 400px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.cardstock-option:hover,
+.cardstock-option.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+    transform: translateY(-2px);
+}
+
+.cardstock-image {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 15px;
+    border: 2px dashed #ddd;
+    overflow: hidden;
+    position: relative;
+}
+
+.cardstock-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    gap: 2px;
+}
+
+.cardstock-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cardstock-gallery img:hover {
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+.option-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+/* Override the existing options-grid for mold step */
+#step1 .options-grid {
+    display: block;
+}
+
+/* Mold Categories with Tabs (like scents) */
+.mold-categories {
+    margin-bottom: 40px;
+}
+
+.mold-categories .category-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mold-categories .category-tab {
+    padding: 8px 16px;
+    border: 2px solid #eee;
+    background: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.mold-categories .category-tab.active, 
+.mold-categories .category-tab:hover {
+    border-color: #667eea;
+    background: #667eea;
+    color: white;
+}
+
+/* Main mold options container - much smaller images */
+.mold-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    min-height: 300px;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Individual mold option - much smaller */
+.mold-option {
+    border: 2px solid #eee;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    max-width: 140px;
+}
+
+.mold-option:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.mold-option.selected {
+    border-color: #667eea;
+    background: #f0f4ff;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Much smaller mold images */
+.mold-image {
+    width: 100%;
+    height: 80px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.mold-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.fallback-icon {
+    font-size: 32px;
+    color: #ccc;
+}
+
+.mold-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.mold-price {
+    color: #667eea;
+    font-weight: 500;
+    font-size: 11px;
+}
+
+/* Cardstock Options (when cardstock tab is selected) */
+.cardstock-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.cardstock-option {
+    border: 2px solid #eee;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 350px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.cardstock-option:hover,
+.cardstock-option.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+    transform: translateY(-2px);
+}
+
+.cardstock-preview {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 10px;
+    border: 2px dashed #ddd;
+    overflow: hidden;
+    position: relative;
+}
+
+.cardstock-mini-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    gap: 2px;
+}
+
+.cardstock-mini-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cardstock-mini-gallery img:hover {
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+/* Remove old cardstock section styles that are no longer needed */
+.cardstock-section {
+    display: none;
+}
+
+.cardstock-inquiry {
+    display: none;
+}
+
+/* Cardstock Modal - keep existing styles */
+.cardstock-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1003;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    padding: 25px 30px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    color: #333;
+    background: #f0f0f0;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.cardstock-samples {
+    margin-bottom: 40px;
+}
+
+.cardstock-samples h4 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.sample-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 1px solid #eee;
+}
+
+.sample-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.sample-image:hover {
+    transform: scale(1.05);
+    border-color: #667eea;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.inquiry-info {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.inquiry-info h4 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.inquiry-info ul {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.inquiry-info li {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 15px;
+}
+
+.inquiry-info p {
+    margin-top: 20px;
+    color: #555;
+    font-size: 16px;
+    text-align: center;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.contact-options {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.contact-options .btn {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    padding: 15px 25px;
+    font-size: 16px;
+}
+
+.contact-options .btn.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Responsive Design for Mold Categories */
 @media (max-width: 768px) {
-    .nav-logo {
-        margin-left: -10px;
+    .mold-categories .category-tabs {
+        gap: 6px;
     }
     
-    .nav-links {
-        margin-right: -10px;
-        gap: 15px;
-    }
-
-    .nav-logo h1 {
-        font-size: 24px;
-    }
-
-    .nav-container {
-        padding: 0 15px;
-    }
-
-    .nav-panda {
-        width: 45px;
-        height: 45px;
-    }
-
-    .hero {
-        text-align: center;
-        padding: 120px 20px 50px;
-    }
-
-    .hero-content {
-        padding: 30px 20px;
-    }
-
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cart-sidebar {
-        width: 100vw;
-        right: -100vw;
-    }
-    
-    .cart-sidebar.open {
-        right: 0;
-    }
-
-    .customize-main {
-        flex-direction: column;
-    }
-
-    .product-summary {
-        width: 100%;
-        position: static;
-    }
-
-    .progress-bar {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .progress-step {
-        margin: 5px;
-    }
-
-    .progress-step:not(:last-child)::after {
-        display: none;
-    }
-
-    .form-row {
-        flex-direction: column;
-    }
-
-    .base-colors {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        margin-bottom: 60px;
-    }
-    
-    .color-option {
-        margin-bottom: 35px;
-    }
-    
-    .color-option::after {
-        bottom: -35px;
+    .mold-categories .category-tab {
+        padding: 6px 12px;
         font-size: 11px;
+    }
+    
+    .mold-options {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
+    }
+    
+    .mold-option {
+        padding: 10px;
+        max-width: 120px;
+    }
+    
+    .mold-image {
+        height: 70px;
+    }
+    
+    .mold-name {
+        font-size: 10px;
+    }
+    
+    .mold-price {
+        font-size: 10px;
+    }
+    
+    .cardstock-option {
+        max-width: 100%;
+        padding: 20px;
+    }
+    
+    .cardstock-preview {
+        height: 120px;
+    }
+    
+    .sample-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+        max-height: 300px;
+        padding: 15px;
+    }
+    
+    .sample-image {
+        height: 80px;
     }
 }
 
 @media (max-width: 480px) {
-    .nav-logo h1 {
-        font-size: 20px;
+    .mold-categories .category-tabs {
+        gap: 4px;
     }
     
-    .nav-logo {
-        margin-left: -5px;
-    }
-    
-    .nav-links {
-        margin-right: -5px;
-    }
-
-    .nav-panda {
-        width: 35px;
-        height: 35px;
-    }
-
-    .hero-content h1 {
-        font-size: 1.5rem;
-    }
-
-    .hero-content {
-        padding: 25px 15px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .btn {
-        text-align: center;
-    }
-
-    .customize-container {
-        padding: 20px;
-    }
-
-    .options-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .base-colors {
-        margin-bottom: 70px;
-    }
-    
-    .color-option::after {
-        bottom: -40px;
+    .mold-categories .category-tab {
+        padding: 5px 10px;
         font-size: 10px;
     }
+    
+    .mold-options {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+    }
+    
+    .mold-option {
+        padding: 8px;
+        max-width: 100px;
+    }
+    
+    .mold-image {
+        height: 60px;
+    }
+    
+    .mold-name {
+        font-size: 9px;
+    }
+    
+    .mold-price {
+        font-size: 9px;
+    }
+    
+    .cardstock-mini-gallery {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+    }
+    
+    .sample-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+    
+    .sample-image {
+        height: 60px;
+    }
 }
+
+/* ...existing code... */
