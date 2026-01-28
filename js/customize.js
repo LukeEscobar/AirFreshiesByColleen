@@ -300,24 +300,77 @@ function setupMoldCategoryTabs() {
 function showMoldCategory(category) {
     const moldCategoryOptions = document.getElementById('moldCategoryOptions');
     
-    // Handle cardstock category separately
+    // Handle cardstock category - show samples as NON-selectable reference images
     if (category === 'cardstock') {
+        // Create cardstock samples as NON-selectable options (skip removed duplicates 3, 5, and empty 26, 27)
+        const cardstockSamples = [];
+        for (let i = 1; i <= 27; i++) {
+            // Skip sample 3, 5 (duplicates) and 26, 27 (empty)
+            if (i === 3 || i === 5 || i === 26 || i === 27) continue;
+            
+            const num = i;
+            const filename = num === 25 ? 'CardStock25.jpg' : `Cardstock${num}.jpg`;
+            cardstockSamples.push({
+                id: `cardstock-${num}`,
+                name: `Cardstock Design ${num}`,
+                price: 0,
+                image: `images/Cardstock/${filename}`
+            });
+        }
+
         moldCategoryOptions.innerHTML = `
-            <div class="cardstock-options">
-                <div class="cardstock-option" onclick="selectCardstock()">
-                    <div class="cardstock-preview">
-                        <div class="cardstock-mini-gallery">
-                            <img src="images/Molds/Cardstock1.jpg" alt="Sample 1">
-                            <img src="images/Molds/Cardstock2.jpg" alt="Sample 2">
-                            <img src="images/Molds/Cardstock3.jpg" alt="Sample 3">
-                            <img src="images/Molds/Cardstock4.jpg" alt="Sample 4">
+            ${cardstockSamples.map(sample => `
+                <div class="mold-option" data-mold="${sample.id}" data-category="cardstock">
+                    <div class="mold-image">
+                        <img src="${sample.image}" alt="${sample.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="fallback-icon" style="display:none;">🔷</div>
+                    </div>
+                    <div class="mold-name">${sample.name}</div>
+                    <div class="mold-price">Reference Only</div>
+                </div>
+            `).join('')}
+            
+            <!-- Custom Options at Bottom -->
+            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px; padding-top: 40px; border-top: 2px solid #eee;">
+                <div class="mold-option cardstock-custom-option" style="cursor: pointer; height: auto; min-height: 260px;">
+                    <div class="mold-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: white;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📤</div>
+                            <div style="font-size: 14px; font-weight: 600;">Upload Your Design</div>
                         </div>
                     </div>
-                    <div class="option-name">Custom Cardstock Design</div>
-                    <div class="option-price">Inquiry Based</div>
+                    <div class="mold-name">Upload Custom Image</div>
+                    <div class="mold-price">Inquiry Based</div>
+                    <p style="font-size: 11px; color: #666; margin-top: 8px; line-height: 1.4;">Upload your own design file for a truly custom air freshener</p>
+                </div>
+                
+                <div class="mold-option cardstock-custom-option" style="cursor: pointer; height: auto; min-height: 260px;">
+                    <div class="mold-image" style="background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: white;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">✍️</div>
+                            <div style="font-size: 14px; font-weight: 600;">Describe Your Design</div>
+                        </div>
+                    </div>
+                    <div class="mold-name">Custom Text Request</div>
+                    <div class="mold-price">Inquiry Based</div>
+                    <p style="font-size: 11px; color: #666; margin-top: 8px; line-height: 1.4;">Tell us your design idea and we'll create it for you</p>
                 </div>
             </div>
         `;
+        
+        // Add click event listeners to custom options after they're added to DOM
+        setTimeout(() => {
+            const uploadOption = moldCategoryOptions.querySelectorAll('.cardstock-custom-option')[0];
+            const textOption = moldCategoryOptions.querySelectorAll('.cardstock-custom-option')[1];
+            
+            if (uploadOption) {
+                uploadOption.addEventListener('click', showUploadForm);
+            }
+            if (textOption) {
+                textOption.addEventListener('click', showCustomDesignForm);
+            }
+        }, 0);
+        
         return;
     }
     
@@ -345,7 +398,7 @@ function showMoldCategory(category) {
 function selectMold(moldId, category) {
     currentSelection.mold = moldId;
     currentSelection.moldCategory = category;
-    currentSelection.isCardstock = false;
+    currentSelection.isCardstock = (category === 'cardstock');
     
     // Update UI - only affect mold options, not cardstock
     document.querySelectorAll('.mold-option').forEach(item => {
@@ -353,34 +406,31 @@ function selectMold(moldId, category) {
     });
     document.querySelector(`[data-mold="${moldId}"]`).classList.add('selected');
     
-    // Also remove selection from cardstock if any
-    document.querySelectorAll('.cardstock-option').forEach(item => {
-        item.classList.remove('selected');
-    });
-    
     // Enable next button
     document.getElementById('nextBtn1').disabled = false;
     
     updateSummary();
 }
 
-// Handle cardstock selection (updated)
-function selectCardstock() {
+// Updated cardstock selection to handle both types
+function selectCardstock(type) {
     currentSelection.isCardstock = true;
-    currentSelection.mold = 'cardstock';
+    currentSelection.mold = `cardstock-${type}`;
     currentSelection.moldCategory = 'cardstock';
+    currentSelection.cardstockType = type;
     
-    // Show inquiry modal
-    showCardstockInquiry();
-    
-    // Update UI - remove selection from mold options
+    // Update UI - highlight selected option
     document.querySelectorAll('.mold-option').forEach(item => {
         item.classList.remove('selected');
     });
-    document.querySelectorAll('.cardstock-option').forEach(item => {
-        item.classList.remove('selected');
-    });
-    document.querySelector('.cardstock-option').classList.add('selected');
+    event.target.closest('.mold-option').classList.add('selected');
+    
+    // Show appropriate modal based on type
+    if (type === 'request') {
+        showCardstockDesignRequestModal();
+    } else if (type === 'upload') {
+        showCardstockUploadModal();
+    }
     
     // Enable next button
     document.getElementById('nextBtn1').disabled = false;
@@ -388,44 +438,53 @@ function selectCardstock() {
     updateSummary();
 }
 
-function showCardstockInquiry() {
+// Modal for custom design request
+function showCardstockDesignRequestModal() {
+    // Generate cardstock samples for modal gallery - skip duplicates (3 and 5)
+    const galleryHtml = [];
+    for (let i = 1; i <= 27; i++) {
+        // Skip sample 3 and 5 (duplicates that were removed)
+        if (i === 3 || i === 5) continue;
+        
+        const num = i;
+        const filename = num === 25 ? 'CardStock25.jpg' : `Cardstock${num}.jpg`;
+        galleryHtml.push(`<img src="images/Molds/${filename}" alt="Cardstock Sample ${num}" class="sample-image">`);
+    }
+    
     const modal = document.createElement('div');
     modal.className = 'cardstock-modal';
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Cardstock Air Freshener Inquiry</h3>
+                <h3>Custom Design Request</h3>
                 <button class="close-modal" onclick="closeCardstockModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="cardstock-samples">
-                    <h4>Sample Designs Available:</h4>
+                    <h4>Browse Our Design Library (200+ Options):</h4>
                     <div class="sample-gallery">
-                        ${Array.from({length: 27}, (_, i) => {
-                            const num = i + 1;
-                            const filename = num === 25 ? 'CardStock25.jpg' : `Cardstock${num}.jpg`;
-                            return `<img src="images/Molds/${filename}" alt="Cardstock Sample ${num}" class="sample-image">`;
-                        }).join('')}
+                        ${galleryHtml.join('')}
                     </div>
                 </div>
                 
                 <div class="inquiry-info">
-                    <h4>Cardstock Options Include:</h4>
+                    <h4>What's Included:</h4>
                     <ul>
-                        <li>Choose from 200+ pre-designed templates</li>
-                        <li>Upload your own custom design</li>
-                        <li>Professional design assistance available</li>
-                        <li>Various paper weights and finishes</li>
-                        <li>Bulk pricing for large orders</li>
-                        <li>Corporate and event customization</li>
+                        <li>Choose from 200+ professionally designed templates</li>
+                        <li>Customize text, colors, and layouts</li>
+                        <li>Professional design assistance included</li>
+                        <li>Multiple paper weights and finishes available</li>
+                        <li>Perfect for events, weddings, corporate gifts</li>
                     </ul>
                     
-                    <p><strong>Pricing:</strong> Varies based on design complexity, quantity, and customization level. Contact us for a personalized quote!</p>
+                    <p><strong>How It Works:</strong> Contact us with your design preferences, and we'll create a custom proof for your approval before production.</p>
+                    
+                    <p><strong>Pricing:</strong> Varies based on design complexity and quantity. Email us for a personalized quote!</p>
                 </div>
                 
                 <div class="contact-options">
-                    <button class="btn primary" onclick="window.location.href='mailto:airfreshiesbycolleen@gmail.com?subject=Cardstock Air Freshener Inquiry'">
-                        📧 Email Us
+                    <button class="btn primary" onclick="window.location.href='mailto:airfreshiesbycolleen@gmail.com?subject=Custom Cardstock Design Request'">
+                        📧 Request Custom Design
                     </button>
                     <button class="btn secondary" onclick="closeCardstockModal()">
                         Continue Shopping
@@ -436,11 +495,69 @@ function showCardstockInquiry() {
     `;
     
     document.body.appendChild(modal);
-    
-    // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
 }
 
+// Modal for upload your own design
+function showCardstockUploadModal() {
+    const modal = document.createElement('div');
+    modal.className = 'cardstock-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Upload Your Own Design</h3>
+                <button class="close-modal" onclick="closeCardstockModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="inquiry-info">
+                    <h4>Design Upload Requirements:</h4>
+                    <ul>
+                        <li><strong>File Format:</strong> PNG, JPG, PDF, or AI (vector preferred)</li>
+                        <li><strong>Resolution:</strong> Minimum 300 DPI for best quality</li>
+                        <li><strong>Size:</strong> We'll scale to fit our standard air freshener sizes</li>
+                        <li><strong>Color Mode:</strong> RGB or CMYK accepted</li>
+                        <li><strong>Bleed:</strong> Include 0.125" bleed if possible</li>
+                    </ul>
+                    
+                    <h4>What Happens Next:</h4>
+                    <ol style="margin-top: 15px; padding-left: 25px;">
+                        <li>Email your design file to us</li>
+                        <li>We'll review for print quality and compatibility</li>
+                        <li>Receive a proof within 24-48 hours</li>
+                        <li>Approve the proof and receive your quote</li>
+                        <li>Production begins after payment</li>
+                    </ol>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 10px; border: 1px solid #ffc107;">
+                        <strong>💡 Design Tips:</strong>
+                        <ul style="margin-top: 10px;">
+                            <li>Keep important elements away from edges</li>
+                            <li>Use high contrast for better visibility</li>
+                            <li>Bold fonts work best for readability</li>
+                            <li>Test your design at actual size before submitting</li>
+                        </ul>
+                    </div>
+                    
+                    <p style="margin-top: 20px;"><strong>Pricing:</strong> Based on design complexity, quantity, and finish options. Contact us for a detailed quote!</p>
+                </div>
+                
+                <div class="contact-options">
+                    <button class="btn primary" onclick="window.location.href='mailto:airfreshiesbycolleen@gmail.com?subject=Upload Custom Cardstock Design&body=Hi! I would like to upload my own design for a cardstock air freshener. Please send me instructions on how to submit my file.'">
+                        📧 Email to Upload Design
+                    </button>
+                    <button class="btn secondary" onclick="closeCardstockModal()">
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+}
+
+// Keep the existing closeCardstockModal function
 function closeCardstockModal() {
     const modal = document.querySelector('.cardstock-modal');
     if (modal) {
@@ -767,16 +884,20 @@ function updateProgressBar() {
     });
 }
 
-// Update summary function to handle new mold structure
+// Update summary function to handle cardstock molds
 function updateSummary() {
     let moldName = '-';
     
-    if (currentSelection.isCardstock) {
-        moldName = 'Custom Cardstock (Inquiry)';
-    } else if (currentSelection.mold && currentSelection.moldCategory) {
-        const category = productData.moldCategories[currentSelection.moldCategory];
-        const mold = category?.find(m => m.id === currentSelection.mold);
-        moldName = mold?.name || '-';
+    if (currentSelection.mold && currentSelection.moldCategory) {
+        if (currentSelection.moldCategory === 'cardstock') {
+            // Extract the number from the cardstock ID
+            const cardstockNum = currentSelection.mold.replace('cardstock-', '');
+            moldName = `Cardstock Design ${cardstockNum}`;
+        } else {
+            const category = productData.moldCategories[currentSelection.moldCategory];
+            const mold = category?.find(m => m.id === currentSelection.mold);
+            moldName = mold?.name || '-';
+        }
     }
     
     const colorName = currentSelection.color && currentSelection.colorVariant ? 
@@ -791,32 +912,32 @@ function updateSummary() {
     document.getElementById('selectedBeads').textContent = currentSelection.beads ? 
         (currentSelection.beads === 'none' ? 'No' : 'Yes') : '-';
 
-    // Calculate price
+    // Calculate price - cardstock uses regular pricing
     let totalPrice = BASE_PRICE;
-    if (currentSelection.isCardstock) {
-        totalPrice = 0; // Inquiry based
-    }
 
-    document.getElementById('summaryPrice').textContent = currentSelection.isCardstock ? 'Inquiry' : totalPrice.toFixed(2);
-    document.getElementById('finalPrice').textContent = currentSelection.isCardstock ? 'Inquiry' : totalPrice.toFixed(2);
+    document.getElementById('summaryPrice').textContent = totalPrice.toFixed(2);
+    document.getElementById('finalPrice').textContent = totalPrice.toFixed(2);
 }
 
 // Add to cart
 function addToCart() {
-    if (currentSelection.isCardstock) {
-        showCardstockInquiry();
-        return;
-    }
-
     if (!isSelectionComplete()) {
         cart.showNotification('Please complete all selections!', 'error');
         return;
     }
 
-    const moldData = productData.moldCategories[currentSelection.moldCategory]?.find(m => m.id === currentSelection.mold);
+    let moldName = 'Custom Mold';
+    
+    if (currentSelection.moldCategory === 'cardstock') {
+        const cardstockNum = currentSelection.mold.replace('cardstock-', '');
+        moldName = `Cardstock Design ${cardstockNum}`;
+    } else {
+        const moldData = productData.moldCategories[currentSelection.moldCategory]?.find(m => m.id === currentSelection.mold);
+        moldName = moldData?.name || 'Custom Mold';
+    }
     
     const item = {
-        mold: moldData?.name || 'Custom Mold',
+        mold: moldName,
         color: `${productData.colors.find(c => c.id === currentSelection.color)?.name} (${currentSelection.colorVariant})`,
         scent: currentSelection.scent,
         glitter: currentSelection.glitter === 'none' ? 'No' : 'Yes',
@@ -915,4 +1036,238 @@ function darkenColor(hex, percent) {
     return "#" + (0x1000000 + (R > 255 ? 255 : R < 0 ? 0 : R) * 0x10000 +
         (G > 255 ? 255 : G < 0 ? 0 : G) * 0x100 +
         (B > 255 ? 255 : B < 0 ? 0 : B)).toString(16).slice(1);
+}
+
+// Show custom design request form in center of screen
+function showCustomDesignForm() {
+    const overlay = document.createElement('div');
+    overlay.className = 'form-overlay';
+    overlay.innerHTML = `
+        <div class="form-modal">
+            <div class="form-header">
+                <h3>Custom Design Request</h3>
+                <button class="close-form" onclick="closeForm()">&times;</button>
+            </div>
+            <div class="form-body">
+                <p style="text-align: center; color: #666; margin-bottom: 25px;">
+                    Tell us about your custom design idea and we'll create a personalized proof for you!
+                </p>
+                
+                <form id="customDesignForm" onsubmit="submitCustomDesignRequest(event)">
+                    <div class="form-group">
+                        <label for="customerName">Your Name *</label>
+                        <input type="text" id="customerName" name="customerName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerEmail">Email Address *</label>
+                        <input type="email" id="customerEmail" name="customerEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerPhone">Phone Number (optional)</label>
+                        <input type="tel" id="customerPhone" name="customerPhone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="designDescription">Design Description *</label>
+                        <textarea id="designDescription" name="designDescription" rows="6" 
+                                  placeholder="Please describe your design idea in detail. Include colors, text, themes, or reference any sample numbers from the gallery above." 
+                                  required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Estimated Quantity</label>
+                        <input type="number" id="quantity" name="quantity" min="1" placeholder="How many would you like?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deadline">Needed By Date (optional)</label>
+                        <input type="date" id="deadline" name="deadline">
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button type="submit" class="btn primary" style="padding: 12px 40px; font-size: 16px;">
+                            Submit Request
+                        </button>
+                        <button type="button" class="btn secondary" onclick="closeForm()" style="padding: 12px 40px; font-size: 16px; margin-left: 15px;">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+}
+
+// Show upload form in center of screen
+function showUploadForm() {
+    const overlay = document.createElement('div');
+    overlay.className = 'form-overlay';
+    overlay.innerHTML = `
+        <div class="form-modal">
+            <div class="form-header">
+                <h3>Upload Your Own Design</h3>
+                <button class="close-form" onclick="closeForm()">&times;</button>
+            </div>
+            <div class="form-body">
+                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #ffc107;">
+                    <strong>📋 File Requirements:</strong>
+                    <ul style="margin-top: 10px; padding-left: 20px; font-size: 14px;">
+                        <li>Format: PNG, JPG, PDF, or AI (vector preferred)</li>
+                        <li>Resolution: Minimum 300 DPI</li>
+                        <li>Color Mode: RGB or CMYK</li>
+                        <li>Include 0.125" bleed if possible</li>
+                    </ul>
+                </div>
+                
+                <form id="uploadDesignForm" onsubmit="submitUploadRequest(event)">
+                    <div class="form-group">
+                        <label for="uploadName">Your Name *</label>
+                        <input type="text" id="uploadName" name="uploadName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="uploadEmail">Email Address *</label>
+                        <input type="email" id="uploadEmail" name="uploadEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="uploadPhone">Phone Number (optional)</label>
+                        <input type="tel" id="uploadPhone" name="uploadPhone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="designFile">Upload Design File *</label>
+                        <input type="file" id="designFile" name="designFile" 
+                               accept=".png,.jpg,.jpeg,.pdf,.ai,.psd" 
+                               required
+                               style="padding: 10px; border: 2px dashed #667eea; border-radius: 8px; background: #f8f9fa;">
+                        <small style="display: block; margin-top: 5px; color: #666;">
+                            Accepted formats: PNG, JPG, PDF, AI, PSD (Max 25MB)
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="uploadQuantity">Estimated Quantity</label>
+                        <input type="number" id="uploadQuantity" name="uploadQuantity" min="1" placeholder="How many would you like?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="uploadNotes">Additional Notes</label>
+                        <textarea id="uploadNotes" name="uploadNotes" rows="4" 
+                                  placeholder="Any special instructions or details about your design..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="uploadDeadline">Needed By Date (optional)</label>
+                        <input type="date" id="uploadDeadline" name="uploadDeadline">
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button type="submit" class="btn primary" style="padding: 12px 40px; font-size: 16px;">
+                            Submit Upload Request
+                        </button>
+                        <button type="button" class="btn secondary" onclick="closeForm()" style="padding: 12px 40px; font-size: 16px; margin-left: 15px;">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+}
+
+// Close form overlay
+function closeForm() {
+    const overlay = document.querySelector('.form-overlay');
+    if (overlay) {
+        overlay.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Submit custom design request
+function submitCustomDesignRequest(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+    
+    // Create email body
+    const emailBody = `
+Custom Design Request
+
+Name: ${data.customerName}
+Email: ${data.customerEmail}
+Phone: ${data.customerPhone || 'Not provided'}
+
+Design Description:
+${data.designDescription}
+
+Quantity: ${data.quantity || 'Not specified'}
+Needed By: ${data.deadline || 'No deadline specified'}
+    `.trim();
+    
+    // Open email client with pre-filled information
+    const subject = 'Custom Cardstock Design Request';
+    const mailtoLink = `mailto:airfreshiesbycolleen@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    alert('Opening your email client... Please send the email to complete your request!');
+    closeForm();
+}
+
+// Submit upload request
+function submitUploadRequest(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const file = formData.get('designFile');
+    
+    // Check file size (25MB limit)
+    if (file.size > 25 * 1024 * 1024) {
+        alert('File size exceeds 25MB. Please compress your file or contact us directly.');
+        return;
+    }
+    
+    const data = Object.fromEntries(formData.entries());
+    
+    // Create email body
+    const emailBody = `
+Design Upload Request
+
+Name: ${data.uploadName}
+Email: ${data.uploadEmail}
+Phone: ${data.uploadPhone || 'Not provided'}
+
+File Name: ${file.name}
+File Size: ${(file.size / 1024 / 1024).toFixed(2)}MB
+
+Quantity: ${data.uploadQuantity || 'Not specified'}
+Needed By: ${data.uploadDeadline || 'No deadline specified'}
+
+Additional Notes:
+${data.uploadNotes || 'None'}
+
+Please find the design file attached to this email.
+    `.trim();
+    
+    // Open email client
+    const subject = 'Design Upload Request - Cardstock Air Freshener';
+    const mailtoLink = `mailto:airfreshiesbycolleen@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    
+    window.location.href = mailtoLink;
+    
+    // Show instruction
+    alert('Opening your email client...\n\nIMPORTANT: Please attach your design file (' + file.name + ') to the email before sending!');
+    closeForm();
 }

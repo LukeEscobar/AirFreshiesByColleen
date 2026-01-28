@@ -1026,21 +1026,21 @@ footer {
 
 .mold-categories .category-tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 30px;
+    gap: 8px; /* 20% smaller */
+    margin-bottom: 30px; /* 20% smaller */
     justify-content: center;
     flex-wrap: wrap;
 }
 
 .mold-categories .category-tab {
-    padding: 8px 16px;
-    border: 2px solid #eee;
+    padding: 8px 16px !important; /* 20% smaller */
+    border: 2px solid #eee !important; /* 20% smaller */
     background: white;
-    border-radius: 25px;
+    border-radius: 26px !important; /* 20% smaller */
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px !important; /* 20% smaller */
 }
 
 .mold-categories .category-tab.active, 
@@ -1050,48 +1050,49 @@ footer {
     color: white;
 }
 
-/* Main mold options container - much smaller images */
+/* Main mold options container - make images 1/5 current size */
 .mold-options {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 15px;
-    min-height: 300px;
-    justify-content: center;
-    max-width: 1000px;
+    grid-template-columns: repeat(3, 200px); /* Fixed: exactly 3 columns at 200px each */
+    gap: 20px;
+    max-width: 660px; /* 3 * 200px + 2 * 20px gap = 660px */
     margin: 0 auto;
+    padding: 20px 0;
+    justify-content: center;
 }
 
-/* Individual mold option - much smaller */
+/* Individual mold option - 1/5 current size */
 .mold-option {
     border: 2px solid #eee;
-    border-radius: 10px;
-    padding: 12px;
+    border-radius: 16px;
+    padding: 16px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
     background: white;
-    max-width: 140px;
+    width: 200px;
+    height: 260px;
 }
 
 .mold-option:hover {
     border-color: #667eea;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
 }
 
 .mold-option.selected {
     border-color: #667eea;
     background: #f0f4ff;
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
 }
 
-/* Much smaller mold images */
+/* Mold images - 1/5 current size */
 .mold-image {
-    width: 100%;
-    height: 80px;
+    width: 168px;
+    height: 168px;
     background: #f8f9fa;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    border-radius: 12px;
+    margin: 0 auto 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1101,45 +1102,117 @@ footer {
 .mold-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.fallback-icon {
-    font-size: 32px;
-    color: #ccc;
+    object-fit: contain;
+    border-radius: 12px;
 }
 
 .mold-name {
     font-weight: 600;
     color: #333;
-    margin-bottom: 6px;
-    font-size: 11px;
+    margin-bottom: 8px;
+    font-size: 14px;
     line-height: 1.2;
 }
 
 .mold-price {
     color: #667eea;
     font-weight: 500;
-    font-size: 11px;
+    font-size: 13px;
 }
 
-/* Cardstock Options (when cardstock tab is selected) */
+/* Remove old cardstock-specific styles */
+.cardstock-grid,
+.cardstock-sample-item,
+.cardstock-sample-image,
+.cardstock-sample-label {
+    display: none;
+}
+
+/* MOLD IMAGE SIZE - 3 per row, larger images */
+.mold-options {
+    display: grid;
+    grid-template-columns: repeat(3, 200px); /* Fixed: exactly 3 columns at 200px each */
+    gap: 20px;
+    max-width: 660px; /* 3 * 200px + 2 * 20px gap = 660px */
+    margin: 0 auto;
+    padding: 20px 0;
+    justify-content: center;
+}
+
+.mold-option {
+    border: 2px solid #eee;
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    width: 200px;
+    height: 260px;
+}
+
+.mold-option:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+}
+
+.mold-option.selected {
+    border-color: #667eea;
+    background: #f0f4ff;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.mold-image {
+    width: 168px;
+    height: 168px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.mold-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.mold-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.mold-price {
+    color: #667eea;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+/* Cardstock Options - also reduce by 1/5 */
 .cardstock-options {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 300px;
+    min-height: 60px; /* 1/5 of 300px = 60px */
+    padding: 2px; /* Much smaller */
 }
 
 .cardstock-option {
     border: 2px solid #eee;
-    border-radius: 15px;
-    padding: 25px;
+    border-radius: 3px; /* 1/5 of 15px = 3px */
+    padding: 5px; /* 1/5 of 25px = 5px */
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    max-width: 350px;
+    width: 70px; /* 1/5 of 350px = 70px */
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
@@ -1147,16 +1220,16 @@ footer {
 .cardstock-option.selected {
     border-color: #667eea;
     background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
-    transform: translateY(-2px);
+    transform: translateY(-0.4px); /* 1/5 of -2px */
 }
 
 .cardstock-preview {
     width: 100%;
-    height: 150px;
-    margin-bottom: 20px;
+    height: 30px; /* 1/5 of 150px = 30px */
+    margin-bottom: 4px; /* 1/5 of 20px = 4px */
     background: white;
-    border-radius: 10px;
-    border: 2px dashed #ddd;
+    border-radius: 2px; /* 1/5 of 10px = 2px */
+    border: 1px dashed #ddd; /* Thinner border */
     overflow: hidden;
     position: relative;
 }
@@ -1166,7 +1239,7 @@ footer {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     height: 100%;
-    gap: 2px;
+    gap: 0.4px; /* 1/5 of 2px */
 }
 
 .cardstock-mini-gallery img {
@@ -1181,269 +1254,92 @@ footer {
     z-index: 1;
 }
 
-/* Remove old cardstock section styles that are no longer needed */
-.cardstock-section {
-    display: none;
-}
-
-.cardstock-inquiry {
-    display: none;
-}
-
-/* Cardstock Modal - keep existing styles */
-.cardstock-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1003;
-}
-
-.modal-content {
+/* Category tabs - also make smaller */
+.mold-categories .category-tab {
+    padding: 2px 3px; /* 1/5 of 8px 16px */
+    border: 1px solid #eee; /* Thinner border */
     background: white;
-    border-radius: 20px;
-    max-width: 900px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.modal-header {
-    padding: 25px 30px 20px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    border-radius: 20px 20px 0 0;
-}
-
-.modal-header h3 {
-    margin: 0;
-    color: #333;
-    font-size: 1.5rem;
-}
-
-.close-modal {
-    background: none;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: #666;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.close-modal:hover {
-    color: #333;
-    background: #f0f0f0;
-}
-
-.modal-body {
-    padding: 30px;
-}
-
-.cardstock-samples {
-    margin-bottom: 40px;
-}
-
-.cardstock-samples h4 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-}
-
-.sample-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 15px;
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 15px;
-    border: 1px solid #eee;
-}
-
-.sample-image {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
+    border-radius: 5px; /* 1/5 of 25px = 5px */
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
+    font-weight: 500;
+    font-size: 3px; /* 1/5 of 13px = 3px */
 }
 
-.sample-image:hover {
-    transform: scale(1.05);
+.mold-categories .category-tab.active, 
+.mold-categories .category-tab:hover {
     border-color: #667eea;
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    background: #667eea;
+    color: white;
 }
 
-.inquiry-info {
-    background: #f8f9fa;
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-}
-
-.inquiry-info h4 {
-    color: #333;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-}
-
-.inquiry-info ul {
-    margin: 15px 0;
-    padding-left: 25px;
-}
-
-.inquiry-info li {
-    margin-bottom: 10px;
-    color: #666;
-    font-size: 15px;
-}
-
-.inquiry-info p {
-    margin-top: 20px;
-    color: #555;
-    font-size: 16px;
-    text-align: center;
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-.contact-options {
+.mold-categories .category-tabs {
     display: flex;
-    gap: 20px;
+    gap: 2px; /* 1/5 of 8px */
+    margin-bottom: 6px; /* 1/5 of 30px = 6px */
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.contact-options .btn {
-    flex: 1;
-    min-width: 150px;
-    max-width: 200px;
-    padding: 15px 25px;
-    font-size: 16px;
-}
-
-.contact-options .btn.primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-/* Responsive Design for Mold Categories */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .mold-categories .category-tabs {
-        gap: 6px;
-    }
-    
-    .mold-categories .category-tab {
-        padding: 6px 12px;
-        font-size: 11px;
-    }
-    
     .mold-options {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(20px, 20px));
+        gap: 2px;
+        max-width: 160px;
     }
     
     .mold-option {
-        padding: 10px;
-        max-width: 120px;
+        width: 20px;
+        height: 28px;
+        padding: 1px;
     }
     
     .mold-image {
-        height: 70px;
+        height: 14px;
     }
     
-    .mold-name {
-        font-size: 10px;
-    }
-    
-    .mold-price {
-        font-size: 10px;
+    .mold-name, .mold-price {
+        font-size: 1.5px;
     }
     
     .cardstock-option {
-        max-width: 100%;
-        padding: 20px;
+        width: 60px;
+        padding: 4px;
     }
     
     .cardstock-preview {
-        height: 120px;
-    }
-    
-    .sample-gallery {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 10px;
-        max-height: 300px;
-        padding: 15px;
-    }
-    
-    .sample-image {
-        height: 80px;
+        height: 24px;
     }
 }
 
 @media (max-width: 480px) {
-    .mold-categories .category-tabs {
-        gap: 4px;
-    }
-    
-    .mold-categories .category-tab {
-        padding: 5px 10px;
-        font-size: 10px;
-    }
-    
     .mold-options {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(16px, 16px));
+        gap: 1px;
+        max-width: 120px;
     }
     
     .mold-option {
-        padding: 8px;
-        max-width: 100px;
+        width: 16px;
+        height: 22px;
+        padding: 1px;
     }
     
     .mold-image {
-        height: 60px;
+        height: 10px;
     }
     
-    .mold-name {
-        font-size: 9px;
+    .mold-name, .mold-price {
+        font-size: 1px;
     }
     
-    .mold-price {
-        font-size: 9px;
+    .cardstock-option {
+        width: 50px;
     }
     
-    .cardstock-mini-gallery {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 1fr);
-    }
-    
-    .sample-gallery {
-        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    }
-    
-    .sample-image {
-        height: 60px;
+    .mold-categories .category-tab {
+        padding: 1px 2px;
+        font-size: 2px;
     }
 }
-
-/* ...existing code... */
