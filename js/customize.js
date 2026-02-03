@@ -281,6 +281,14 @@ function initializeStep1() {
     
     // Show initial category (automotive)
     showMoldCategory('automotive');
+    
+    // Add scroll event listener to remove pulse animation hint
+    const categoryTabs = document.querySelector('.mold-categories .category-tabs');
+    if (categoryTabs) {
+        categoryTabs.addEventListener('scroll', function() {
+            this.classList.add('scrolled');
+        }, { once: true });
+    }
 }
 
 function setupMoldCategoryTabs() {
@@ -612,6 +620,14 @@ function initializeStep3() {
 
     // Show initial category (floral)
     showScentCategory('floral');
+    
+    // Add scroll event listener to scent tabs
+    const scentTabs = document.querySelector('.scent-categories .category-tabs');
+    if (scentTabs) {
+        scentTabs.addEventListener('scroll', function() {
+            this.classList.add('scrolled');
+        }, { once: true });
+    }
 }
 
 // Color selection
@@ -761,6 +777,14 @@ function initializeStep3() {
 
     // Show initial category (floral)
     showScentCategory('floral');
+    
+    // Add scroll event listener to scent tabs
+    const scentTabs = document.querySelector('.scent-categories .category-tabs');
+    if (scentTabs) {
+        scentTabs.addEventListener('scroll', function() {
+            this.classList.add('scrolled');
+        }, { once: true });
+    }
 }
 
 // Show scent category
