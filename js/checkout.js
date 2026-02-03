@@ -4,6 +4,23 @@
 const APPLICATION_ID = 'sandbox-sq0idb-your-app-id'; // Replace with your Square Application ID
 const LOCATION_ID = 'your-location-id'; // Replace with your Square Location ID
 
+// Google Form Configuration
+const GOOGLE_FORM_ID = '1FAIpQLScowsagPD-Y4V_9T4G3RyQbdKj1uLqWOMKumZNuHiLmTKVIeA';
+const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
+
+// Map your Google Form field entry IDs
+const FORM_ENTRIES = {
+    customerName: 'entry.381893978',   // Customer Name
+    email: 'entry.1526288937',          // Email
+    phone: 'entry.2118025959',          // Phone
+    mold: 'entry.89470720',             // Mold
+    color: 'entry.721206467',           // Color
+    scent: 'entry.1101988140',          // Scent
+    glitter: 'entry.224447220',         // Glitter
+    bead: 'entry.740613811',            // Bead
+    price: 'entry.1395615999'           // Price
+};
+
 let paymentForm;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,10 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeCheckout() {
-    // Load cart items
     displayOrderSummary();
-    
-    // Setup form validation
     setupFormValidation();
 }
 
@@ -24,16 +38,14 @@ function displayOrderSummary() {
     const checkoutTotal = document.getElementById('checkoutTotal');
     
     if (cart.items.length === 0) {
-        checkoutItems.innerHTML = '<p>No items in cart</p>';
-        checkoutTotal.textContent = '0.00';
+        checkoutItems.innerHTML = '<p>Your cart is empty.</p>';
         return;
     }
     
     checkoutItems.innerHTML = cart.items.map(item => `
         <div class="checkout-item">
-            <h4>Custom Air Freshener</h4>
+            <h4>${item.mold}</h4>
             <div class="item-details">
-                <div><strong>Mold:</strong> ${item.mold}</div>
                 <div><strong>Color:</strong> ${item.color}</div>
                 <div><strong>Scent:</strong> ${item.scent}</div>
                 <div><strong>Glitter:</strong> ${item.glitter}</div>
@@ -221,7 +233,10 @@ function simulatePaymentProcessing(orderData) {
     const success = Math.random() > 0.1; // 90% success rate for demo
     
     if (success) {
-        showPaymentStatus('Payment successful! Order confirmed.', 'success');
+        showPaymentStatus('Processing order...', 'info');
+        
+        // Submit order to Google Sheets
+        submitOrderToGoogleSheets(orderData);
         
         // Clear cart
         cart.clearCart();
@@ -234,6 +249,51 @@ function simulatePaymentProcessing(orderData) {
         
     } else {
         showPaymentStatus('Payment failed. Please try again.', 'error');
+    }
+}
+
+// New function to submit order to Google Sheets
+function submitOrderToGoogleSheets(orderData) {
+    try {
+        // Get phone number (you may need to add this field to checkout.html)
+        const phone = document.getElementById('phone')?.value || 'Not provided';
+        
+        // Process each item in the cart separately
+        orderData.items.forEach((item, index) => {
+            const formData = new FormData();
+            
+            // Add customer info
+            formData.append(FORM_ENTRIES.customerName, 
+                `${orderData.customer.firstName} ${orderData.customer.lastName}`);
+            formData.append(FORM_ENTRIES.email, orderData.customer.email);
+            formData.append(FORM_ENTRIES.phone, phone);
+            
+            // Add item details
+            formData.append(FORM_ENTRIES.mold, item.mold);
+            formData.append(FORM_ENTRIES.color, item.color);
+            formData.append(FORM_ENTRIES.scent, item.scent);
+            formData.append(FORM_ENTRIES.glitter, item.glitter);
+            formData.append(FORM_ENTRIES.bead, item.beads);
+            formData.append(FORM_ENTRIES.price, `$${item.price.toFixed(2)}`);
+            
+            // Submit to Google Form (one submission per item)
+            fetch(GOOGLE_FORM_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Required for Google Forms
+            })
+            .then(() => {
+                console.log(`Order item ${index + 1} submitted to Google Sheets`);
+            })
+            .catch(error => {
+                console.error('Error submitting to Google Sheets:', error);
+            });
+        });
+        
+        console.log('All order items submitted successfully');
+    } catch (error) {
+        console.error('Error preparing order data:', error);
+        // Order still completes even if Google Sheets submission fails
     }
 }
 

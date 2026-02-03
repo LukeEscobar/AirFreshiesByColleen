@@ -125,11 +125,16 @@ body.home-page {
     transform: scale(1.1);
 }
 
+/* Desktop navigation - move to top right */
 .nav-links {
     display: flex;
-    align-items: center;
     gap: 30px;
-    margin-right: -300px;
+    margin-right: -360px;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .nav-links a {
@@ -137,6 +142,8 @@ body.home-page {
     color: #333;
     font-weight: 500;
     transition: color 0.3s ease;
+    padding: 0;
+    border: none;
 }
 
 .nav-links a:hover {
@@ -150,6 +157,9 @@ body.home-page {
     padding: 8px;
     border-radius: 50%;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .cart-icon:hover {
@@ -798,6 +808,11 @@ footer {
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease;
+    background: white;
+    cursor: pointer;
+    /* Ensure proper scrolling in dropdown */
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .form-group input:focus,
@@ -1281,65 +1296,206 @@ footer {
     flex-wrap: wrap;
 }
 
+/* Form Overlay Styles */
+.form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.form-modal {
+    background: white;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    margin: auto;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.form-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-form {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-form:hover {
+    opacity: 0.8;
+}
+
+.form-body {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group small {
+    color: #666;
+    font-size: 12px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .mold-options {
-        grid-template-columns: repeat(auto-fill, minmax(20px, 20px));
-        gap: 2px;
-        max-width: 160px;
+    .nav-container {
+        height: 70px;
+        padding: 0 10px;
     }
     
-    .mold-option {
-        width: 20px;
-        height: 28px;
-        padding: 1px;
+    .nav-logo {
+        margin-left: 0;
     }
     
-    .mold-image {
-        height: 14px;
+    .nav-logo h1 {
+        font-size: 24px;
     }
     
-    .mold-name, .mold-price {
-        font-size: 1.5px;
+    .nav-panda {
+        width: 50px;
+        height: 50px;
     }
     
-    .cardstock-option {
-        width: 60px;
-        padding: 4px;
+    /* Hide all nav links on mobile */
+    .nav-links a {
+        display: none !important;
     }
     
-    .cardstock-preview {
-        height: 24px;
+    /* Show only cart icon on mobile - override desktop positioning */
+    .cart-icon {
+        display: flex !important;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        margin: 0 !important;
+    }
+    
+    /* Reset nav-links positioning for mobile */
+    .nav-links {
+        margin-right: 0 !important;
+        right: 0 !important;
+    }
+    
+    /* Hero Section */
+    .hero {
+        padding-top: 70px;
+        min-height: 100vh; /* Full viewport height */
+        padding-bottom: 60px; /* Add more bottom padding */
+    }
+    
+    .hero-content {
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 40px; /* Add space before about section */
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* About Section - ensure clean separation */
+    .about {
+        padding: 40px 15px;
+        margin-top: 0;
+        background: rgba(255, 255, 255, 0.98) !important; /* Stronger background */
     }
 }
 
 @media (max-width: 480px) {
-    .mold-options {
-        grid-template-columns: repeat(auto-fill, minmax(16px, 16px));
-        gap: 1px;
-        max-width: 120px;
+    .hero {
+        min-height: 100vh;
+        padding-bottom: 50px;
     }
     
-    .mold-option {
-        width: 16px;
-        height: 22px;
-        padding: 1px;
+    .hero-content {
+        margin-bottom: 30px;
     }
     
-    .mold-image {
-        height: 10px;
+    .hero-content h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
     }
     
-    .mold-name, .mold-price {
-        font-size: 1px;
-    }
-    
-    .cardstock-option {
-        width: 50px;
-    }
-    
-    .mold-categories .category-tab {
-        padding: 1px 2px;
-        font-size: 2px;
+    .hero-content p {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
     }
 }

@@ -317,7 +317,7 @@ function showMoldCategory(category) {
                 image: `images/Cardstock/${filename}`
             });
         }
-
+        
         moldCategoryOptions.innerHTML = `
             ${cardstockSamples.map(sample => `
                 <div class="mold-option" data-mold="${sample.id}" data-category="cardstock">
@@ -332,7 +332,7 @@ function showMoldCategory(category) {
             
             <!-- Custom Options at Bottom -->
             <div style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px; padding-top: 40px; border-top: 2px solid #eee;">
-                <div class="mold-option cardstock-custom-option" style="cursor: pointer; height: auto; min-height: 260px;">
+                <div class="mold-option cardstock-custom-option" onclick="showUploadForm()" style="cursor: pointer; height: auto; min-height: 260px;">
                     <div class="mold-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: white;">
                             <div style="font-size: 48px; margin-bottom: 10px;">📤</div>
@@ -344,7 +344,7 @@ function showMoldCategory(category) {
                     <p style="font-size: 11px; color: #666; margin-top: 8px; line-height: 1.4;">Upload your own design file for a truly custom air freshener</p>
                 </div>
                 
-                <div class="mold-option cardstock-custom-option" style="cursor: pointer; height: auto; min-height: 260px;">
+                <div class="mold-option cardstock-custom-option" onclick="showCustomDesignForm()" style="cursor: pointer; height: auto; min-height: 260px;">
                     <div class="mold-image" style="background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: white;">
                             <div style="font-size: 48px; margin-bottom: 10px;">✍️</div>
@@ -358,16 +358,23 @@ function showMoldCategory(category) {
             </div>
         `;
         
-        // Add click event listeners to custom options after they're added to DOM
+        // Add click handlers to custom options after DOM is updated
         setTimeout(() => {
-            const uploadOption = moldCategoryOptions.querySelectorAll('.cardstock-custom-option')[0];
-            const textOption = moldCategoryOptions.querySelectorAll('.cardstock-custom-option')[1];
+            const uploadOption = moldCategoryOptions.querySelector('[data-custom-type="upload"]');
+            const textOption = moldCategoryOptions.querySelector('[data-custom-type="text"]');
             
             if (uploadOption) {
-                uploadOption.addEventListener('click', showUploadForm);
+                uploadOption.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showUploadForm();
+                });
             }
+            
             if (textOption) {
-                textOption.addEventListener('click', showCustomDesignForm);
+                textOption.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showCustomDesignForm();
+                });
             }
         }, 0);
         
