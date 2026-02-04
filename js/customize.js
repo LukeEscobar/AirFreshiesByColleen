@@ -425,6 +425,11 @@ function selectMold(moldId, category) {
     document.getElementById('nextBtn1').disabled = false;
     
     updateSummary();
+    
+    // Automatically advance to next step after a brief delay
+    setTimeout(() => {
+        nextStep();
+    }, 300);
 }
 
 // Updated cardstock selection to handle both types
@@ -758,6 +763,11 @@ function selectColorVariant(variant) {
     document.getElementById('nextBtn2').disabled = false;
     
     updateSummary();
+    
+    // Automatically advance to next step after a brief delay
+    setTimeout(() => {
+        nextStep();
+    }, 300);
 }
 
 // Step 3: Initialize scent selection
@@ -813,6 +823,11 @@ function selectScent(scent) {
     document.getElementById('nextBtn3').disabled = false;
     
     updateSummary();
+    
+    // Automatically advance to next step after a brief delay
+    setTimeout(() => {
+        nextStep();
+    }, 300);
 }
 
 // Glitter selection
@@ -829,6 +844,11 @@ function selectGlitter(glitterType) {
     document.getElementById('nextBtn4').disabled = false;
     
     updateSummary();
+    
+    // Automatically advance to next step after a brief delay
+    setTimeout(() => {
+        nextStep();
+    }, 300);
 }
 
 // Bead selection
@@ -845,6 +865,11 @@ function selectBeads(beadType) {
     document.getElementById('addToCartBtn').disabled = false;
     
     updateSummary();
+    
+    // Don't auto-advance on last step, but scroll to add to cart button
+    setTimeout(() => {
+        document.getElementById('addToCartBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
 }
 
 // Navigation functions
