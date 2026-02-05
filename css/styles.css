@@ -933,7 +933,7 @@ footer {
 
 .cart-footer {
     padding: 20px;
-    padding-bottom: calc(20px + max(env(safe-area-inset-bottom), 20px)) !important;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 30px)) !important;
     /* Ensures at least 40px total bottom padding on mobile */
     border-top: 1px solid #eee;
     background: #f8f9fa;
@@ -949,6 +949,7 @@ footer {
 .checkout-btn {
     width: 100%;
     margin: 0;
+    margin-bottom: env(safe-area-inset-bottom, 10px) !important;
 }
 
 /* Cardstock Section (separate from tabbed categories) */
