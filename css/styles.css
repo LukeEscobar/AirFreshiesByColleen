@@ -90,12 +90,15 @@ body.home-page {
 }
 
 .nav-logo {
-    margin-left: -300px;
+    flex-shrink: 0;
+    z-index: 1;
+    position: absolute;
+    left: 20px;
 }
 
 .nav-logo h1 {
     font-family: 'Dancing Script', cursive;
-    font-size: 50px;
+    font-size: 50px; 
     font-weight: 700;
     color: #8e44ad;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
@@ -117,6 +120,7 @@ body.home-page {
 .nav-panda {
     width: 75px;
     height: 75px;
+    object-fit: contain;
     border-radius: 50%;
     transition: transform 0.3s ease;
 }
@@ -125,16 +129,15 @@ body.home-page {
     transform: scale(1.1);
 }
 
-/* Desktop navigation - move to top right */
+/* Desktop navigation - position in top right */
 .nav-links {
     display: flex;
     gap: 30px;
-    margin-right: -360px;
     align-items: center;
+    flex-shrink: 0;
+    z-index: 1;
     position: absolute;
     right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .nav-links a {
