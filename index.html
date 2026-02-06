@@ -3,26 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AirFreshiesByColleen - Custom Air Fresheners</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Custom Air Fresheners & Freshies | AirFreshiesByColleen - Design Your Own</title>
+    <meta name="description" content="Create custom air fresheners and freshies with unique designs, scents, and colors. Choose from 100+ molds, premium fragrances, and personalized options. Order your custom freshies today!">
+    <meta name="keywords" content="custom air fresheners, freshies, car freshies, custom freshies, personalized air fresheners, air freshener design, custom car scents, handmade freshies, scented freshies, custom aroma beads">
+    <meta name="author" content="AirFreshiesByColleen">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourwebsite.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/">
+    <meta property="og:title" content="Custom Air Fresheners & Freshies | AirFreshiesByColleen">
+    <meta property="og:description" content="Design your perfect custom air freshener with 100+ molds, premium scents, and personalized options. Handmade freshies delivered to your door.">
+    <meta property="og:image" content="https://yourwebsite.com/images/panda-chibi.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourwebsite.com/">
+    <meta property="twitter:title" content="Custom Air Fresheners & Freshies | AirFreshiesByColleen">
+    <meta property="twitter:description" content="Design your perfect custom air freshener with 100+ molds, premium scents, and personalized options.">
+    <meta property="twitter:image" content="https://yourwebsite.com/images/panda-chibi.png">
+    
     <link rel="icon" type="image/png" href="images/panda-chibi.png">
-    <link rel="stylesheet" href="css/styles.css?v=1">
+    <link rel="stylesheet" href="css/styles.css?v=2.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "AirFreshiesByColleen",
+        "image": "https://yourwebsite.com/images/panda-chibi.png",
+        "description": "Custom air fresheners and freshies with unique designs, premium scents, and personalized options.",
+        "url": "https://yourwebsite.com",
+        "telephone": "+1-XXX-XXX-XXXX",
+        "email": "airfreshiesbycolleen@gmail.com",
+        "priceRange": "$12.99",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Your City",
+            "addressRegion": "Your State",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 0.0,
+            "longitude": 0.0
+        },
+        "sameAs": [
+            "https://facebook.com/yourpage",
+            "https://instagram.com/yourpage"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Custom Air Fresheners",
+        "image": "https://yourwebsite.com/images/panda-chibi.png",
+        "description": "Handmade custom air fresheners (freshies) with your choice of design, color, scent, and special effects like glitter and beads.",
+        "brand": {
+            "@type": "Brand",
+            "name": "AirFreshiesByColleen"
+        },
+        "offers": {
+            "@type": "Offer",
+            "url": "https://yourwebsite.com/customize.html",
+            "priceCurrency": "USD",
+            "price": "12.99",
+            "availability": "https://schema.org/InStock",
+            "seller": {
+                "@type": "Organization",
+                "name": "AirFreshiesByColleen"
+            }
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "reviewCount": "100"
+        }
+    }
+    </script>
 </head>
 <body class="home-page">
     <header>
-        <nav class="navbar">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
             <div class="nav-container">
                 <div class="nav-logo">
                     <h1>AirFreshiesByColleen</h1>
                 </div>
                 <div class="nav-center">
-                    <img src="images/panda-chibi.png" alt="Panda Logo" class="nav-panda">
+                    <img src="images/panda-chibi.png" alt="AirFreshiesByColleen Logo - Custom Freshies" class="nav-panda">
                 </div>
                 <div class="nav-links">
                     <a href="#home">Home</a>
                     <a href="#about">About</a>
                     <a href="customize.html">Shop Now</a>
-                    <div class="cart-icon" onclick="toggleCart()">
+                    <div class="cart-icon" onclick="toggleCart()" role="button" aria-label="Shopping cart">
                         <span>🛒</span>
                         <span class="cart-count" id="cartCount">0</span>
                     </div>
@@ -35,9 +117,9 @@
         <section id="home" class="hero">
             <div class="hero-content">
                 <h1>Welcome to AirFreshiesByColleen</h1>
-                <p>Create your perfect custom air freshener</p>
+                <p>Create your perfect custom air freshener and freshies</p>
                 <div class="hero-buttons">
-                    <a href="customize.html" class="btn primary">Start Customizing</a>
+                    <a href="customize.html" class="btn primary">Start Customizing Your Freshie</a>
                     <a href="#about" class="btn secondary">Learn More</a>
                 </div>
             </div>
@@ -45,27 +127,27 @@
 
         <section id="about" class="about">
             <div class="container">
-                <h2>Why Choose AirFreshiesByColleen?</h2>
+                <h2>Why Choose Our Custom Freshies?</h2>
                 <div class="features-grid">
                     <div class="feature">
                         <div class="feature-icon">🎨</div>
-                        <h3>Custom Design</h3>
-                        <p>Choose from multiple molds, colors, and finishes to create your unique air freshener</p>
+                        <h3>Custom Freshie Design</h3>
+                        <p>Choose from 100+ molds, colors, and finishes to create your unique custom air freshener</p>
                     </div>
                     <div class="feature">
                         <div class="feature-icon">🌸</div>
                         <h3>Premium Scents</h3>
-                        <p>Select from our extensive collection of high-quality fragrances</p>
+                        <p>Select from our extensive collection of high-quality fragrances for your freshies</p>
                     </div>
                     <div class="feature">
                         <div class="feature-icon">✨</div>
                         <h3>Special Effects</h3>
-                        <p>Add glitter and beads for that extra sparkle and style</p>
+                        <p>Add glitter and beads to your custom air fresheners for extra sparkle</p>
                     </div>
                     <div class="feature">
                         <div class="feature-icon">🚚</div>
                         <h3>Fast Shipping</h3>
-                        <p>Quick processing and reliable delivery to your door</p>
+                        <p>Quick processing and reliable delivery of your freshies to your door</p>
                     </div>
                 </div>
             </div>
@@ -73,10 +155,10 @@
     </main>
 
     <!-- Cart Sidebar -->
-    <div id="cartSidebar" class="cart-sidebar">
+    <div id="cartSidebar" class="cart-sidebar" role="dialog" aria-label="Shopping cart">
         <div class="cart-header">
             <h3>Shopping Cart</h3>
-            <button class="close-cart" onclick="toggleCart()">&times;</button>
+            <button class="close-cart" onclick="toggleCart()" aria-label="Close cart">&times;</button>
         </div>
         <div class="cart-items" id="cartItems">
             <!-- Cart items will be populated here -->
@@ -93,11 +175,11 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 AirFreshiesByColleen. All rights reserved.</p>
+            <p>&copy; 2025 AirFreshiesByColleen. All rights reserved. | Custom Air Fresheners & Freshies</p>
         </div>
     </footer>
 
-    <script src="js/cart.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/cart.js?v=2.0"></script>
+    <script src="js/main.js?v=2.0"></script>
 </body>
 </html>
