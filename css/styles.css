@@ -1425,7 +1425,7 @@ footer {
     }
     
     .nav-logo h1 {
-        font-size: 20.7px;
+        font-size: 19.53px !important;
     }
     
     .nav-panda {
@@ -1718,29 +1718,45 @@ footer {
         gap: 8px !important;
         padding: 12px 0 !important;
         max-width: 100% !important;
+        margin-bottom: 20px !important; /* Reduced from 50px */
     }
     
     .color-option {
         width: 100% !important;
         aspect-ratio: 1 !important;
         height: auto !important;
-        min-height: 55px !important;
-        border-radius: 10px !important;
-        border: 2px solid #eee !important;
+        max-width: 70px !important; /* ADD THIS LINE */
+        margin: 0 auto 10px !important; /* Reduced bottom margin */
+        border-width: 2px !important;
     }
     
-    .color-variants {
-        margin-top: 18px !important;
+    /* HIDE color name on mobile to prevent enlargement */
+    .color-option::after {
+        display: none !important;
     }
     
-    .color-variants h3 {
-        font-size: 1rem !important;
-        margin-bottom: 12px !important;
+    .color-option.selected {
+        transform: scale(1) !important; /* Prevent scaling on selection */
+        border-width: 3px !important;
     }
     
-    .variant-options {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 10px !important;
+    .color-option:hover, .color-option.selected {
+        border-color: #333;
+        transform: scale(1.1);
+    }
+    
+    .color-option::after {
+        content: attr(data-name);
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #666;
+        white-space: nowrap;
+        font-weight: 500;
+        text-align: center;
+        width: max-content;
     }
     
     .variant-option {
