@@ -244,7 +244,7 @@ function simulatePaymentProcessing(orderData) {
         // Show success message and redirect
         setTimeout(() => {
             alert('Thank you for your order! You will receive a confirmation email shortly.');
-            window.location.href = 'index.html';
+            window.location.href = '/';
         }, 2000);
         
     } else {
