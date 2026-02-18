@@ -1277,9 +1277,14 @@ Needed By: ${data.deadline || 'No deadline specified'}
     
     window.location.href = mailtoLink;
     
-    // Show success message
-    alert('Opening your email client... Please send the email to complete your request!');
+    // Close form immediately
     closeForm();
+    
+    // Show success message overlay (removed duration parameter)
+    showSuccessMessage(
+        'Request Sent Successfully!',
+        'Your custom design request email has been prepared. Please send the email to complete your request. We\'ll get back to you within 24-48 hours!'
+    );
 }
 
 // Submit upload request
@@ -1323,7 +1328,117 @@ Please find the design file attached to this email.
     
     window.location.href = mailtoLink;
     
-    // Show instruction
-    alert('Opening your email client...\n\nIMPORTANT: Please attach your design file (' + file.name + ') to the email before sending!');
+    // Close form immediately
     closeForm();
+    
+    // Show success message overlay (removed duration parameter)
+    showSuccessMessage(
+        'Upload Request Prepared!',
+        `Your upload request email has been prepared. \n\nIMPORTANT: Please attach your design file (${file.name}) to the email before sending! \n\nWe'll review your design and get back to you within 24-48 hours.`
+    );
+}
+
+// New function to show success message and redirect
+function showSuccessMessage(title, message) {
+    // Create success overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'success-overlay';
+    overlay.innerHTML = `
+        <div class="success-modal">
+            <div class="success-icon">✅</div>
+            <h2>${title}</h2>
+            <p>${message}</p>
+            <div class="success-footer">
+                <button class="btn primary" onclick="redirectToHome()" style="margin-top: 20px; padding: 12px 40px;">
+                    Return to Home
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .success-modal {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s ease;
+        }
+        
+        .success-modal h2 {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .success-modal p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            white-space: pre-line;
+        }
+        
+        .success-footer {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .success-footer button {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .success-footer button:hover {
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    `;
+    
+    document.head.appendChild(style);
+    document.body.appendChild(overlay);
+}
+
+// Add redirect function
+function redirectToHome() {
+    window.location.href = 'index.html';
 }
