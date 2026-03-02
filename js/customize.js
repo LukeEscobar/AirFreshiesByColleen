@@ -5,6 +5,8 @@ const productData = {
     moldCategories: {
         automotive: [
             { id: 'acura', name: 'Acura Logo', price: 0, image: 'images/Molds/Acura.jpg' },
+            { id: 'bmw', name: 'BMW Logo', price: 0, image: 'images/Molds/BMW.jpg' },
+            { id: 'checkered-flag', name: 'Checkered Flag', price: 0, image: 'images/Molds/CheckeredFlag.jpg' },
             { id: 'chevrolet', name: 'Chevrolet Logo', price: 0, image: 'images/Molds/Chevrolet.jpg' },
             { id: 'chevy', name: 'Chevy Logo', price: 0, image: 'images/Molds/Chevy.jpg' },
             { id: 'chevy-girl', name: 'Chevy Girl', price: 0, image: 'images/Molds/ChevyGirl.jpg' },
@@ -14,7 +16,7 @@ const productData = {
             { id: 'jeep-duck', name: 'Jeep Duck', price: 0, image: 'images/Molds/JeepDuck.jpg' },
             { id: 'john-deer', name: 'John Deere', price: 0, image: 'images/Molds/JohnDeer.jpg' },
             { id: 'mustang', name: 'Mustang Logo', price: 0, image: 'images/Molds/Mustang.jpg' },
-            { id: 'toyota', name: 'Toyota Logo', price: 0, image: 'images/Molds/Toyota.jpg' }
+            { id: 'toyota', name: 'Toyota Logo', price: 0, image: 'images/Molds/Toyota.jpg' },
         ],
         sports: [
             { id: 'basketball', name: 'Basketball', price: 0, image: 'images/Molds/Basketball.jpg' },
@@ -23,12 +25,13 @@ const productData = {
             { id: 'football', name: 'Football', price: 0, image: 'images/Molds/Football.jpg' },
             { id: 'roller-skate', name: 'Roller Skate', price: 0, image: 'images/Molds/RollerSkate.jpg' },
             { id: 'soccer-ball', name: 'Soccer Ball', price: 0, image: 'images/Molds/SoccerBall.jpg' },
-            { id: 'volleyball', name: 'Volleyball', price: 0, image: 'images/Molds/Volleyball.jpg' }
+            { id: 'volleyball', name: 'Volleyball', price: 0, image: 'images/Molds/Volleyball.jpg' },
         ],
         animals: [
             { id: 'butterfly1', name: 'Butterfly Style 1', price: 0, image: 'images/Molds/Butterfly1.jpg' },
             { id: 'butterfly2', name: 'Butterfly Style 2', price: 0, image: 'images/Molds/Butterfly2.jpg' },
             { id: 'butterfly3', name: 'Butterfly Style 3', price: 0, image: 'images/Molds/Butterfly3.jpg' },
+            { id: 'butterfly4', name: 'Butterfly Style 4', price: 0, image: 'images/Molds/Butterfly4.jpg' },
             { id: 'cardinal', name: 'Cardinal', price: 0, image: 'images/Molds/Cardinal.jpg' },
             { id: 'cardinal-branch', name: 'Cardinal on Branch', price: 0, image: 'images/Molds/CardinalBranch.jpg' },
             { id: 'cat-butt', name: 'Cat Butt', price: 0, image: 'images/Molds/CatButt.jpg' },
@@ -39,9 +42,11 @@ const productData = {
             { id: 'deer-flag', name: 'Deer with Flag', price: 0, image: 'images/Molds/DeerFlag.jpg' },
             { id: 'dolphin', name: 'Dolphin', price: 0, image: 'images/Molds/Dolphin.jpg' },
             { id: 'duck-me', name: 'Duck Me', price: 0, image: 'images/Molds/DuckMe.jpg' },
+            { id: 'elephant', name: 'Elephant', price: 0, image: 'images/Molds/Elephant.jpg' },
             { id: 'fancy-cow', name: 'Fancy Cow', price: 0, image: 'images/Molds/FancyCow.jpg' },
             { id: 'flamingo', name: 'Flamingo', price: 0, image: 'images/Molds/Flamingo.jpg' },
             { id: 'floatie-cow', name: 'Floatie Cow', price: 0, image: 'images/Molds/FloatieCow.jpg' },
+            { id: 'giraffe', name: 'Giraffe', price: 0, image: 'images/Molds/Giraffe.jpg' },
             { id: 'highland-cow', name: 'Highland Cow', price: 0, image: 'images/Molds/HighlandCow.jpg' },
             { id: 'highland-cow2', name: 'Highland Cow 2', price: 0, image: 'images/Molds/HighlandCow2.jpg' },
             { id: 'humming-bird', name: 'Hummingbird', price: 0, image: 'images/Molds/HummingBird.jpg' },
@@ -58,26 +63,35 @@ const productData = {
             { id: 'seahorse', name: 'Seahorse', price: 0, image: 'images/Molds/Seahorse.jpg' },
             { id: 'seaturtle', name: 'Sea Turtle', price: 0, image: 'images/Molds/Seaturtle.jpg' },
             { id: 'seaturtle2', name: 'Sea Turtle 2', price: 0, image: 'images/Molds/Seaturtle2.jpg' },
-            { id: 'unicorn', name: 'Unicorn', price: 0, image: 'images/Molds/Unicorn.jpg' }
+            { id: 'snoopy', name: 'Snoopy', price: 0, image: 'images/Molds/Snoopy.jpg' },
+            { id: 'unicorn', name: 'Unicorn', price: 0, image: 'images/Molds/Unicorn.jpg' },
         ],
         occupations: [
             { id: 'barber', name: 'Barber', price: 0, image: 'images/Molds/Barber.jpg' },
             { id: 'fire-dep', name: 'Fire Department', price: 0, image: 'images/Molds/FireDep.jpg' },
             { id: 'mail-truck', name: 'Mail Truck', price: 0, image: 'images/Molds/MailTruck.jpg' },
             { id: 'nail-tech', name: 'Nail Technician', price: 0, image: 'images/Molds/NailTech.jpg' },
+            { id: 'nurse-scrubs', name: 'Nurse Scrubs', price: 0, image: 'images/Molds/NurseScrubs.jpg' },
             { id: 'salon', name: 'Hair Salon', price: 0, image: 'images/Molds/Salon.jpg' },
             { id: 'schoolbus', name: 'School Bus', price: 0, image: 'images/Molds/Schoolbus.jpg' },
             { id: 'scrub-life', name: 'Scrub Life', price: 0, image: 'images/Molds/ScrubLife.jpg' },
+            { id: 'scrub-life2', name: 'Scrub Life 2', price: 0, image: 'images/Molds/ScrubLife2.jpg' },
             { id: 'tools', name: 'Tools', price: 0, image: 'images/Molds/Tools.jpg' },
             { id: 'usaf', name: 'US Air Force', price: 0, image: 'images/Molds/USAF.jpg' },
-            { id: 'us-army', name: 'US Army', price: 0, image: 'images/Molds/USArmy.jpg' }
+            { id: 'us-army', name: 'US Army', price: 0, image: 'images/Molds/USArmy.jpg' },
         ],
         family: [
             { id: 'auntie', name: 'Auntie', price: 0, image: 'images/Molds/Auntie.jpg' },
             { id: 'dad', name: 'Dad', price: 0, image: 'images/Molds/Dad.jpg' },
             { id: 'dad2', name: 'Dad Style 2', price: 0, image: 'images/Molds/Dad2.jpg' },
+            { id: 'dad3', name: 'Dad Style 3', price: 0, image: 'images/Molds/Dad3.jpg' },
             { id: 'dance-mom', name: 'Dance Mom', price: 0, image: 'images/Molds/DanceMom.jpg' },
-            { id: 'welcome-little-one', name: 'Welcome Little One', price: 0, image: 'images/Molds/WelcomeLittleOne.jpg' }
+            { id: 'grandma', name: 'Grandma', price: 0, image: 'images/Molds/Grandma.jpg' },
+            { id: 'mama', name: 'Mama', price: 0, image: 'images/Molds/Mama.jpg' },
+            { id: 'mama-bear', name: 'Mama Bear', price: 0, image: 'images/Molds/MamaBear.jpg' },
+            { id: 'mom-bun', name: 'Mom Bun', price: 0, image: 'images/Molds/MomBun.jpg' },
+            { id: 'nana', name: 'Nana', price: 0, image: 'images/Molds/Nana.jpg' },
+            { id: 'welcome-little-one', name: 'Welcome Little One', price: 0, image: 'images/Molds/WelcomeLittleOne.jpg' },
         ],
         seasonal: [
             { id: 'bells', name: 'Christmas Bells', price: 0, image: 'images/Molds/Bells.jpg' },
@@ -87,11 +101,12 @@ const productData = {
             { id: 'ho-ho-ho', name: 'Ho Ho Ho', price: 0, image: 'images/Molds/HoHoHo.jpg' },
             { id: 'ho-ho-ho2', name: 'Ho Ho Ho 2', price: 0, image: 'images/Molds/HoHoHo2.jpg' },
             { id: 'ornament', name: 'Christmas Ornament', price: 0, image: 'images/Molds/Ornament.jpg' },
+            { id: 'pumpkin', name: 'Pumpkin', price: 0, image: 'images/Molds/Pumpkin.jpg' },
             { id: 'santa', name: 'Santa', price: 0, image: 'images/Molds/Santa.jpg' },
             { id: 'snowflake', name: 'Snowflake', price: 0, image: 'images/Molds/Snowflake.jpg' },
             { id: 'snowman', name: 'Snowman', price: 0, image: 'images/Molds/Snowman.jpg' },
             { id: 'xmas-tree', name: 'Christmas Tree', price: 0, image: 'images/Molds/XmasTree.jpg' },
-            { id: 'xmas-tree-truck', name: 'Christmas Tree Truck', price: 0, image: 'images/Molds/XmasTreeTruck.jpg' }
+            { id: 'xmas-tree-truck', name: 'Christmas Tree Truck', price: 0, image: 'images/Molds/XmasTreeTruck.jpg' },
         ],
         characters: [
             { id: 'baby-yoda', name: 'Baby Yoda', price: 0, image: 'images/Molds/BabyYoda.jpg' },
@@ -101,11 +116,15 @@ const productData = {
             { id: 'mickey-mouse', name: 'Mickey Mouse', price: 0, image: 'images/Molds/MickeyMouse.jpg' },
             { id: 'mickey-mouse-pants', name: 'Mickey Mouse Pants', price: 0, image: 'images/Molds/MickeyMousePants.jpg' },
             { id: 'miney-mouse', name: 'Minnie Mouse', price: 0, image: 'images/Molds/MineyMouse.jpg' },
+            { id: 'minnie-ears', name: 'Minnie Ears', price: 0, image: 'images/Molds/MinnieEars.jpg' },
             { id: 'nemo', name: 'Nemo', price: 0, image: 'images/Molds/Nemo.jpg' },
-            { id: 'spider-man', name: 'Spider-Man', price: 0, image: 'images/Molds/SpiderMan.jpg' }
+            { id: 'spider-man', name: 'Spider-Man', price: 0, image: 'images/Molds/SpiderMan.jpg' },
+            { id: 'spidey', name: 'Spidey', price: 0, image: 'images/Molds/Spidey.jpg' },
+            { id: 'stitch', name: 'Stitch', price: 0, image: 'images/Molds/Stitch.jpg' },
         ],
         nature: [
             { id: 'anchor', name: 'Anchor', price: 0, image: 'images/Molds/Anchor.jpg' },
+            { id: 'anchor2', name: 'Anchor Style 2', price: 0, image: 'images/Molds/Anchor2.jpg' },
             { id: 'apple', name: 'Apple', price: 0, image: 'images/Molds/Apple.jpg' },
             { id: 'clover', name: 'Four Leaf Clover', price: 0, image: 'images/Molds/Clover.jpg' },
             { id: 'conch', name: 'Conch Shell', price: 0, image: 'images/Molds/Conch.jpg' },
@@ -114,6 +133,7 @@ const productData = {
             { id: 'lighthouse', name: 'Lighthouse', price: 0, image: 'images/Molds/Lighthouse.jpg' },
             { id: 'palm-tree', name: 'Palm Tree', price: 0, image: 'images/Molds/PalmTree.jpg' },
             { id: 'pineapple', name: 'Pineapple', price: 0, image: 'images/Molds/Pineapple.jpg' },
+            { id: 'rose', name: 'Rose', price: 0, image: 'images/Molds/Rose.jpg' },
             { id: 'seashell1', name: 'Seashell Style 1', price: 0, image: 'images/Molds/Seashell1.jpg' },
             { id: 'seashell2', name: 'Seashell Style 2', price: 0, image: 'images/Molds/Seashell2.jpg' },
             { id: 'smile-flower', name: 'Smiley Flower', price: 0, image: 'images/Molds/SmileFlower.jpg' },
@@ -121,7 +141,8 @@ const productData = {
             { id: 'starfish', name: 'Starfish', price: 0, image: 'images/Molds/Starfish.jpg' },
             { id: 'strawberry', name: 'Strawberry', price: 0, image: 'images/Molds/Strawberry.jpg' },
             { id: 'sunflower', name: 'Sunflower', price: 0, image: 'images/Molds/Sunflower.jpg' },
-            { id: 'sunflower2', name: 'Sunflower 2', price: 0, image: 'images/Molds/Sunflower2.jpg' }
+            { id: 'sunflower2', name: 'Sunflower 2', price: 0, image: 'images/Molds/Sunflower2.jpg' },
+            { id: 'sunflower3', name: 'Sunflower 3', price: 0, image: 'images/Molds/Sunflower3.jpg' },
         ],
         symbols: [
             { id: 'a-z', name: 'A-Z Letters', price: 0, image: 'images/Molds/A-Z.jpg' },
@@ -137,16 +158,20 @@ const productData = {
             { id: 'cross5', name: 'Cross Style 5', price: 0, image: 'images/Molds/Cross5.jpg' },
             { id: 'heart-hands', name: 'Heart Hands', price: 0, image: 'images/Molds/HeartHands.jpg' },
             { id: 'peace', name: 'Peace Sign', price: 0, image: 'images/Molds/Peace.jpg' },
+            { id: 'peace-sign', name: 'Peace Sign 2', price: 0, image: 'images/Molds/PeaceSign.jpg' },
             { id: 'pride', name: 'Pride Flag', price: 0, image: 'images/Molds/Pride.jpg' },
             { id: 'ribbon', name: 'Ribbon', price: 0, image: 'images/Molds/Ribbon.jpg' },
             { id: 'rock-and-roll', name: 'Rock and Roll', price: 0, image: 'images/Molds/RockAndRoll.jpg' },
-            { id: 'veteran-flag', name: 'Veteran Flag', price: 0, image: 'images/Molds/VeteranFlag.jpg' }
+            { id: 'veteran-flag', name: 'Veteran Flag', price: 0, image: 'images/Molds/VeteranFlag.jpg' },
         ],
         lifestyle: [
             { id: 'bass', name: 'Bass Guitar', price: 0, image: 'images/Molds/Bass.jpg' },
+            { id: 'bass2', name: 'Bass Guitar Style 2', price: 0, image: 'images/Molds/Bass2.jpg' },
+            { id: 'bass3', name: 'Bass Guitar Style 3', price: 0, image: 'images/Molds/Bass3.jpg' },
             { id: 'book', name: 'Book', price: 0, image: 'images/Molds/Book.jpg' },
             { id: 'book2', name: 'Book Style 2', price: 0, image: 'images/Molds/Book2.jpg' },
             { id: 'cowboy-boot', name: 'Cowboy Boot', price: 0, image: 'images/Molds/CowboyBoot.jpg' },
+            { id: 'cowboy-boot2', name: 'Cowboy Boot Style 2', price: 0, image: 'images/Molds/CowboyBoot2.jpg' },
             { id: 'dance-mode-on', name: 'Dance Mode On', price: 0, image: 'images/Molds/DanceModeOn.jpg' },
             { id: 'excavator', name: 'Excavator', price: 0, image: 'images/Molds/Excavator.jpg' },
             { id: 'feet', name: 'Baby Feet', price: 0, image: 'images/Molds/Feet.jpg' },
@@ -159,11 +184,12 @@ const productData = {
             { id: 'machine', name: 'Machine', price: 0, image: 'images/Molds/Machine.jpg' },
             { id: 'mermaid-tail', name: 'Mermaid Tail', price: 0, image: 'images/Molds/MermaidTail.jpg' },
             { id: 'music-note', name: 'Music Note', price: 0, image: 'images/Molds/MusicNote.jpg' },
+            { id: 'plyers-pun', name: 'Plyers Pun', price: 0, image: 'images/Molds/PlyersPun.jpg' },
             { id: 'shirt', name: 'T-Shirt', price: 0, image: 'images/Molds/Shirt.jpg' },
             { id: 'smiley', name: 'Smiley Face', price: 0, image: 'images/Molds/Smiley.jpg' },
             { id: 'tractor', name: 'Tractor', price: 0, image: 'images/Molds/Tractor.jpg' },
-            { id: 'water-bottle', name: 'Water Bottle', price: 0, image: 'images/Molds/WaterBottle.jpg' }
-        ]
+            { id: 'water-bottle', name: 'Water Bottle', price: 0, image: 'images/Molds/WaterBottle.jpg' },
+        ],
     },
     
     colors: [
