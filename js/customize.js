@@ -210,6 +210,7 @@ const productData = {
         { id: 'gold', name: 'Gold', hex: '#ffd700', variants: ['light', 'default', 'dark'] },
         { id: 'maroon', name: 'Maroon', hex: '#800000', variants: ['light', 'default', 'dark'] },
         { id: 'pink', name: 'Pink', hex: '#e91e63', variants: ['light', 'default', 'dark', 'fluorescent'] },
+        { id: 'colors-displayed', name: 'Colors Displayed', hex: '#ffffff', variants: ['default'] },
         
         // Fluorescent colors
         { id: 'yellow-fluor', name: 'Yellow', hex: '#ffff00', variants: ['fluorescent'], fluorescent: true },
@@ -616,13 +617,21 @@ function closeCardstockModal() {
 function initializeStep2() {
     const baseColors = document.getElementById('baseColors');
     
-    // Group colors by base color (excluding duplicates for fluorescent)
     const uniqueColors = productData.colors.filter((color, index, array) => {
-        // Keep standard colors and first occurrence of fluorescent colors
         return !color.fluorescent || array.findIndex(c => c.name === color.name && !c.fluorescent) === -1;
     });
     
     baseColors.innerHTML = uniqueColors.map(color => {
+        if (color.id === 'colors-displayed') {
+            return `
+                <div class="color-option colors-displayed-option" 
+                     data-color="${color.id}" 
+                     data-name="${color.name}"
+                     onclick="selectColor('${color.id}')">
+                    Colors Displayed
+                </div>
+            `;
+        }
         return `
             <div class="color-option" 
                  data-color="${color.id}" 
@@ -670,23 +679,19 @@ function selectColor(colorId) {
         item.classList.remove('selected');
     });
     document.querySelector(`[data-color="${colorId}"]`).classList.add('selected');
-    
-    // Find the selected color and any fluorescent variant
+
     const selectedColor = productData.colors.find(c => c.id === colorId);
-    const fluorescentVariant = productData.colors.find(c => 
-        c.name === selectedColor.name && c.fluorescent
-    );
-    
-    // Check if this color only has default variant (white/black)
+
+    // If only one variant (default), skip variant selection and auto-advance
     if (selectedColor.variants.length === 1 && selectedColor.variants[0] === 'default') {
-        // For white and black, automatically select default variant and move to next step
         currentSelection.colorVariant = 'default';
         document.getElementById('colorVariants').style.display = 'none';
         document.getElementById('nextBtn2').disabled = false;
         updateSummary();
+        setTimeout(() => nextStep(), 300);
         return;
     }
-    
+
     // Combine variants from both standard and fluorescent versions
     let allVariants = [...(selectedColor.variants || [])];
     if (fluorescentVariant && !allVariants.includes('fluorescent')) {
@@ -983,7 +988,10 @@ function updateSummary() {
     }
     
     const colorName = currentSelection.color && currentSelection.colorVariant ? 
-        `${productData.colors.find(c => c.id === currentSelection.color)?.name} (${currentSelection.colorVariant})` : 
+        (currentSelection.color === 'colors-displayed' ? 'Colors Displayed' :
+        currentSelection.colorVariant === 'default' && productData.colors.find(c => c.id === currentSelection.color)?.variants.length === 1 ?
+        productData.colors.find(c => c.id === currentSelection.color)?.name :
+        `${productData.colors.find(c => c.id === currentSelection.color)?.name} (${currentSelection.colorVariant})`) : 
         (currentSelection.color ? productData.colors.find(c => c.id === currentSelection.color)?.name : '-');
     
     document.getElementById('selectedMold').textContent = moldName;
@@ -1020,7 +1028,10 @@ function addToCart() {
     
     const item = {
         mold: moldName,
-        color: `${productData.colors.find(c => c.id === currentSelection.color)?.name} (${currentSelection.colorVariant})`,
+        color: currentSelection.color === 'colors-displayed' ? 'Colors Displayed' :
+               currentSelection.colorVariant === 'default' ? 
+               productData.colors.find(c => c.id === currentSelection.color)?.name :
+               `${productData.colors.find(c => c.id === currentSelection.color)?.name} (${currentSelection.colorVariant})`,
         scent: currentSelection.scent,
         glitter: currentSelection.glitter === 'none' ? 'No' : 'Yes',
         beads: currentSelection.beads === 'none' ? 'No' : 'Yes',
@@ -1381,6 +1392,30 @@ function showSuccessMessage(title, message) {
             </div>
         </div>
     `;
+
+    // Colors Shown selection
+function selectColorsShown() {
+    currentSelection.color = 'colors-shown';
+    currentSelection.colorVariant = 'default';
+
+    // Clear any selected color circles
+    document.querySelectorAll('.color-option').forEach(item => {
+        item.classList.remove('selected');
+    });
+
+    // Hide variants
+    document.getElementById('colorVariants').style.display = 'none';
+
+    // Enable next button
+    document.getElementById('nextBtn2').disabled = false;
+
+    updateSummary();
+
+    // Auto advance
+    setTimeout(() => {
+        nextStep();
+    }, 300);
+}
     
     // Add styles
     const style = document.createElement('style');
